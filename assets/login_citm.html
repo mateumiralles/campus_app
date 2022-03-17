@@ -1,0 +1,666 @@
+<html>
+<head>
+<title>Campus CITM</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<script src="https://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-151062-2";
+urchinTracker();
+//Sirve para saber el tamaño de la ventana
+function getViewportSize() { 
+	var x, y; 
+	if (self.innerHeight) { // MOS 
+		y = self.innerHeight; 
+		x = self.innerWidth; 
+	} else if (document.documentElement && document.documentElement.clientWidth) { // IE6 Strict 
+		x = document.documentElement.clientWidth; 
+		y = document.documentElement.clientHeight; 
+	} else if (document.body.clientHeight) { // IE quirks 
+		y = document.body.clientHeight; 
+		x = document.body.clientWidth; 
+	} 
+	return {x: x, y: y}; 
+}
+</script>
+<script src="includes/javascript/jquery.js" type="text/javascript"></script>
+<link href="estils/general.css?timestamp=1647315929" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="includes/javascript/jquery.tooltip/jquery.tooltip.css" />
+<link rel="stylesheet" href="includes/javascript/jquery.tooltip/jquery.tooltip.custom.css" />
+<link rel="stylesheet" href="includes/javascript/shadowbox/shadowbox.css" type="text/css" media="screen" />
+<script src="includes/javascript/shadowbox/shadowbox.js" type="text/javascript"></script>
+<script type="text/javascript">
+	Shadowbox.init({
+    	language: 'ca',
+	    players:  ['html', 'iframe','flv','img','qt','swf','wmp']
+}); 
+</script>
+<script type="text/javascript">
+function openShadowbox(content, player, title, height, width){
+    Shadowbox.open({
+        content:    content,
+        player:     player,
+        title:      title,
+		height: 	height,
+		width: 		width
+    });
+}
+</script>
+</head>
+<body marginheight="0" marginwidth="0" leftmargin="0" topmargin="0" >
+<div id="capa_online"  style="position:absolute; visibility:hidden; left:-100px;top:-100px;z-index:100">
+<img src="online.php" id="imagen" width="0" height="0" border="0" >
+</div>
+<script src="includes/javascript/jquery.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/JavaScript">
+function recarga_imagen()
+{
+	setTimeout('document.getElementById("imagen").src="online.php?id_usuari=509499";recarga_imagen();',60000);//60000= 60 segundos
+}
+recarga_imagen();
+</script>
+<div id="top1" class="citmtop" >
+<div id="ajuda"><a href="#" onclick="window.open('ajuda.php','','left=150,top=150,height=450,width=900,scrollbars=no,location=no,menubar=no,statusbar=no,resizable=yes');">ajuda</a> | <a href="/logout.php">Sortir</a></div>
+<span><img src="img/logo_citm.png" style="margin-top:10px; margin-left:10px;" alt="CITM" /></span>
+</div>
+<div  style=" position:relative;z-index:10;" >
+<ul id="menu"  >
+	<li class="primer">&nbsp;</li>
+			<li  class="seleccionat" ><a href="/inici.php">Inici</a></li>
+        			<li id="li_missatges" ><a href="/missatges_llistat.php">Missatges</a></li>
+                	   		<li ><a  href="/configuracio.php" >Configuració</a></li>
+	    
+		<li ><a  href="/espai_personal.php" >Espai personal</a></li>
+            	
+    </ul>
+</div>
+<div id="mensajes">
+<div class="Arial11BlackSeparada" style="padding-left:30px; padding-top:10px; padding-bottom:5px; clear:both; float:left ">
+<img src="img/login.gif" />&nbsp;
+Usuari&nbsp;:&nbsp;Mateu Miralles Selvi </div>
+<script src="includes/javascript/jquery.js" type="text/javascript"></script>
+                         <div style="float:left;position: relative;">
+                  <div class="darrera_conexio">
+                    <div class="titol_darrera_conexio" >Darrera Connexió</div> 
+                    <div class="text_darrera_conexio" style="display: none;">: 
+					 15/03/2022 03:51</div>                
+                    <div class="mes_info_darrera_conexio">
+                        <div class="text_darrera_tancar" style="display: none;"><img src="img/close.png" /></div>                
+                        <ul>
+                            <li><b>IP</b>: 188.26.215.241</li>
+                            <li><b>Data</b>: 15/03/2022 03:51</li>
+                            <li><b>Equip</b>:  </li>
+                            <li><b>Navegador</b>: </li>
+                                                
+                        </ul>   
+                                                    <img class="map" src="https://maps.googleapis.com/maps/api/staticmap?center=,&zoom=14&size=640x400&key=AIzaSyDSPlpWTQ9RQ5jrPY0y9iY7Q41riqmbOYA" />
+                                            </div>
+                   </div>
+              </div>        
+			  <script>
+                function activar_mes_info_darrera_conexio()
+                {
+                    $(".text_darrera_tancar").click(function() {
+                        $(".titol_darrera_conexio").trigger("click");
+                    });	
+                    $(".text_darrera_conexio").remove();
+                    $(".titol_darrera_conexio").css("cursor","pointer");			  				
+                    $(".titol_darrera_conexio").click(function() {
+                        if($(".mes_info_darrera_conexio").is(":visible"))						  	
+                             $(".text_darrera_tancar").fadeOut();
+                         $(".mes_info_darrera_conexio").animate({width: 'toggle',height: 'toggle'},1000,function(){
+                             // animation complete.
+                              if($(".mes_info_darrera_conexio").is(":visible"))						  	
+                                  $(".text_darrera_tancar").fadeIn();
+                         });
+                    });
+                }
+                function mostrar_amagar_nomes_darrera_conexio()
+                {
+                         $(".text_darrera_conexio").delay(1000).animate({width: 'toggle'},1000).delay( 5000 ).animate({width: 'toggle'},1000, function() {
+                               // Animation complete.
+                                activar_mes_info_darrera_conexio();
+                          });
+                        
+                }
+                $( document ).ready(function() {
+                    						 activar_mes_info_darrera_conexio();
+						
+                });
+              </script>
+        <!-- ESTO ES DONDE ANTES ESTABA SITUADO LO DE NUEVO MENSAJE, SE HA QUITADO
+   <a href="missatges_llistat.php" > 
+    96 missatges nous  </a></div>
+ -->
+</div>
+ 
+	<div id="nouMissatge" style=" display:none; position:absolute; top:89px; left:205px; width:24px; height:18px;background-image:url(img/nous_missatges.gif); padding-top:4px; *padding-top:0px; background-repeat:no-repeat">
+    	<a href="missatges_llistat.php" title="96 missatges nous" style="font-size:11px; color:#FFFFFF; text-decoration:none; font-weight:bold; padding-left:5px"  >96</a>
+    </div>
+    <script type="text/javascript">
+		// posiciono la capa
+		//alert($("#nouMissatge").position().top);
+		var pos_li = $("#li_missatges").position();	
+		var nuevo_left=pos_li.left+$("#li_missatges").width()-60;
+		$("#nouMissatge").css('left',nuevo_left);
+		 if(!$.browser.msie) // con explorer el movimiento no funciona
+		 {			
+		 	$("#nouMissatge").css('display','block');
+			$("#nouMissatge").animate({top: "69px" }, 750 );
+		 }
+		else			
+		{
+			$("#nouMissatge").css('top',69);			
+			$("#nouMissatge").fadeIn(1000);
+		 	
+		}
+	</script>
+<br style="clear:both" class="hideOldCampus"/>
+<table width="100%" height="40" border="0" cellpadding="0" cellspacing="0">
+  <tr> 
+    <td width="10">&nbsp;&nbsp;</td>
+    <td width="50%" valign="top"> <table width="100%"  border="0" cellpadding="0" cellspacing="0">
+			<tr> 
+			  <td height="22" width="13" class="BordesUpLeftDownAzul BgColorAzulOscuro"><img src="img/1pixeltransparente.gif" height="1" width="13"></td>
+			  <td height="22" width="100%" class="BordesUpDownRightAzul BgColorAzulOscuro"> 
+				<div class="Arial11BlancBoldTitolEsq">Entorns d'activitat</div></td>
+			</tr>
+			<tr> 
+			  <td height="4" colspan="2"></td>
+			</tr>
+	<tr> 
+				<td height="38" colspan="2" > 
+					<table border="0" width="100%" height="38" cellpadding="0" cellspacing="0" style="margin-bottom:10px" >
+					  <tr> 
+						<td width="10" class="ManoSola BordesLeftParkingTTC" onClick="window.location.href='tfg_proposta_llistat.php';">&nbsp;</td>
+						<td class="Arial11GrisParkingTTC ManoSola BordesMiddleParkingTTC" onClick="window.location.href='tfg_proposta_llistat.php';">Propostes Treballs de Fi de Grau</td>
+						<td width="45" class="ManoSola BordesRightParkingTTC" onClick="window.location.href='tfg_proposta_llistat.php';" ><img src="img/icono_TFG.png" style="padding-left:5px;"></td>
+					  </tr>	
+					</table>
+				</td>
+			</tr>
+		          <tr> 
+          <td height="38" colspan="2"  class="BordesAllArea5Link"> 
+            <table border="0" width="100%" height="100%" cellpadding="0" cellspacing="0">
+              <tr> 
+                <td width="10" onClick="window.open('activitat.php?id_activitat=1090010021','_self')"></td>
+                <td class="Arial11BlackBold" onClick="window.open('activitat.php?id_activitat=1090010021','_self')">
+				Grau en Multimèdia (2021-22)</td>
+				              </tr>
+            </table>
+          </td>
+        </tr>
+		<tr> 
+          <td height="38" colspan="2" id="td_botones">
+		  	<a href="#" onClick="window.location.href='aules.php?id_activitat=1090010021&ancho_ventana='+getViewportSize().x;"><div class="boto_area_5"><img src="./img/boto_material_5.gif" alt="material" align="absbottom" border="0" />&nbsp;&nbsp;Material</div></a>
+		  				  <a href="participants.php?id_activitat=1090010021"><div class="boto_area_5 boto_area_5_pa"><img src="./img/boto_participants_5.gif" alt="material" align="absbottom" border="0" />&nbsp;&nbsp;Participants</div></a>
+			  
+            
+		  </td>
+        </tr>
+		<tr> 
+          <td height="1" colspan="2" class="CeldaArea5"></td>
+        </tr>
+        <tr><td colspan="2" >   			
+            					<table border="0" width="100%"  cellpadding="0" cellspacing="0" style="margin-top:3px">
+                						                	<tr>
+				                    	<td>&nbsp;</td>
+				                        <td width="620" style="border-left:solid 1px #335C85; border-right:solid 1px #335C85">
+				                        	<table border="0" width="100%"  cellpadding="0" cellspacing="0" >
+				                            	<tr style="border-left:solid 1px #ADBECE; border-right:solid 1px #ADBECE;border-top:solid 1px #ADBECE;background-color:#335C85">
+				                                	<td height="20" valign="middle" style="padding-left:5px; " class="Arial11BlancBold">Pròximes classes</td>
+				                                    <td width="105px" align="right"  style="padding-right:9px;"><img  src="img/porta.gif"></td>
+				                                </tr>
+				                                												<tr>
+				                                	<td style="padding-left:5px; padding-right:5px; padding-top:5px;" class="Arial11Black"><span class="Arial11BlackBold">16-03-2022 10:15&nbsp;</span><a style="text-decoration: none; " href="material.php?id_aula=Z21137862&id_activitat=1090010021">BETMA VI: Efectes Visuals  G-10</a>  (Salvador Bolarin Molina)</td>
+				                                    <td width="105px" class="Arial11BlueBold" align="right"  style="padding-right:9px; color:#335C85;">TR12-202</td>
+				                              </tr>
+				                              				                              <tr><td colspan="2" height="7px"></td></tr>                                                                                                
+				                            </table>
+				                        </td>
+				                    </tr>                        
+								<tr >
+									<td>&nbsp;</td>
+									<td height="24" align="right" class=" Arial10Black" style="border-left:solid 1px #335C85; border-right:solid 1px #335C85;border-bottom:solid 1px #335C85;">
+										<span style="padding-right:7px; ">* Actualizat cada 30 minuts (Informació subjecta a variacions)</span>
+									</td>
+								</tr>                        
+                                 
+                  			   					</table>			
+ 				      
+						                          
+            </td>
+        </tr>
+        <tr> 
+          <td height="6" colspan="2"></td>
+        </tr>
+        <tr> 
+          <td height="38" colspan="2"  class="BordesAllArea5Link"> 
+            <table border="0" width="100%" height="100%" cellpadding="0" cellspacing="0">
+              <tr> 
+                <td width="10" onClick="window.open('activitat.php?id_activitat=1090010020','_self')"></td>
+                <td class="Arial11BlackBold" onClick="window.open('activitat.php?id_activitat=1090010020','_self')">
+				Grau en Multimèdia (2020-21)</td>
+				              </tr>
+            </table>
+          </td>
+        </tr>
+		<tr> 
+          <td height="38" colspan="2" id="td_botones">
+		  	<a href="#" onClick="window.location.href='aules.php?id_activitat=1090010020&ancho_ventana='+getViewportSize().x;"><div class="boto_area_5"><img src="./img/boto_material_5.gif" alt="material" align="absbottom" border="0" />&nbsp;&nbsp;Material</div></a>
+		  				  <a href="participants.php?id_activitat=1090010020"><div class="boto_area_5 boto_area_5_pa"><img src="./img/boto_participants_5.gif" alt="material" align="absbottom" border="0" />&nbsp;&nbsp;Participants</div></a>
+			  
+            
+		  </td>
+        </tr>
+		<tr> 
+          <td height="1" colspan="2" class="CeldaArea5"></td>
+        </tr>
+        <tr><td colspan="2" >   			
+            					<table border="0" width="100%"  cellpadding="0" cellspacing="0" style="margin-top:3px">
+                		  					</table>			
+ 				      
+						                          
+            </td>
+        </tr>
+        <tr> 
+          <td height="6" colspan="2"></td>
+        </tr>
+        <tr> 
+          <td height="38" colspan="2"  class="BordesAllArea5Link"> 
+            <table border="0" width="100%" height="100%" cellpadding="0" cellspacing="0">
+              <tr> 
+                <td width="10" onClick="window.open('activitat.php?id_activitat=1090010019','_self')"></td>
+                <td class="Arial11BlackBold" onClick="window.open('activitat.php?id_activitat=1090010019','_self')">
+				Grau en Multimèdia (2019-20)</td>
+				              </tr>
+            </table>
+          </td>
+        </tr>
+		<tr> 
+          <td height="38" colspan="2" id="td_botones">
+		  	<a href="#" onClick="window.location.href='aules.php?id_activitat=1090010019&ancho_ventana='+getViewportSize().x;"><div class="boto_area_5"><img src="./img/boto_material_5.gif" alt="material" align="absbottom" border="0" />&nbsp;&nbsp;Material</div></a>
+		  				  <a href="participants.php?id_activitat=1090010019"><div class="boto_area_5 boto_area_5_pa"><img src="./img/boto_participants_5.gif" alt="material" align="absbottom" border="0" />&nbsp;&nbsp;Participants</div></a>
+			  
+            
+		  </td>
+        </tr>
+		<tr> 
+          <td height="1" colspan="2" class="CeldaArea5"></td>
+        </tr>
+        <tr><td colspan="2" >   			
+            					<table border="0" width="100%"  cellpadding="0" cellspacing="0" style="margin-top:3px">
+                		  					</table>			
+ 				      
+						                          
+            </td>
+        </tr>
+        <tr> 
+          <td height="6" colspan="2"></td>
+        </tr>
+        <tr> 
+          <td height="38" colspan="2"  class="BordesAllArea5Link"> 
+            <table border="0" width="100%" height="100%" cellpadding="0" cellspacing="0">
+              <tr> 
+                <td width="10" onClick="window.open('activitat.php?id_activitat=1090010018','_self')"></td>
+                <td class="Arial11BlackBold" onClick="window.open('activitat.php?id_activitat=1090010018','_self')">
+				Grau en Multimèdia (2018-19)</td>
+				              </tr>
+            </table>
+          </td>
+        </tr>
+		<tr> 
+          <td height="38" colspan="2" id="td_botones">
+		  	<a href="#" onClick="window.location.href='aules.php?id_activitat=1090010018&ancho_ventana='+getViewportSize().x;"><div class="boto_area_5"><img src="./img/boto_material_5.gif" alt="material" align="absbottom" border="0" />&nbsp;&nbsp;Material</div></a>
+		  				  <a href="participants.php?id_activitat=1090010018"><div class="boto_area_5 boto_area_5_pa"><img src="./img/boto_participants_5.gif" alt="material" align="absbottom" border="0" />&nbsp;&nbsp;Participants</div></a>
+			  
+            
+		  </td>
+        </tr>
+		<tr> 
+          <td height="1" colspan="2" class="CeldaArea5"></td>
+        </tr>
+        <tr><td colspan="2" >   			
+            					<table border="0" width="100%"  cellpadding="0" cellspacing="0" style="margin-top:3px">
+                		  					</table>			
+ 				      
+						                          
+            </td>
+        </tr>
+        <tr> 
+          <td height="6" colspan="2"></td>
+        </tr>
+        <tr> 
+          <td height="38" colspan="2"  class="BordesAllArea4Link"> 
+            <table border="0" width="100%" height="100%" cellpadding="0" cellspacing="0">
+              <tr> 
+                <td width="10" onClick="window.open('activitat.php?id_activitat=100','_self')"></td>
+                <td class="Arial11BlackBold" onClick="window.open('activitat.php?id_activitat=100','_self')">
+				ESPAI CITM</td>
+				              </tr>
+            </table>
+          </td>
+        </tr>
+		<tr> 
+          <td height="38" colspan="2" id="td_botones">
+		  	<a href="#" onClick="window.location.href='aules.php?id_activitat=100&ancho_ventana='+getViewportSize().x;"><div class="boto_area_4"><img src="./img/boto_material_4.gif" alt="material" align="absbottom" border="0" />&nbsp;&nbsp;Material</div></a>
+		  				  <a href="participants.php?id_activitat=100"><div class="boto_area_4 boto_area_4_pa"><img src="./img/boto_participants_4.gif" alt="material" align="absbottom" border="0" />&nbsp;&nbsp;Participants</div></a>
+			  
+            
+		  </td>
+        </tr>
+		<tr> 
+          <td height="1" colspan="2" class="CeldaArea4"></td>
+        </tr>
+        <tr><td colspan="2" >   			
+            					<table border="0" width="100%"  cellpadding="0" cellspacing="0" style="margin-top:3px">
+                		  					</table>			
+ 											<table border="0" width="100%"  cellpadding="0" cellspacing="0" style="margin-top:3px">
+								<tr>
+									<td>&nbsp;</td>
+									<td  style="border-left:solid 1px #335C85; border-right:solid 1px #335C85">
+										<table border="0" width="100%" cellpadding="0" cellspacing="0" >
+											<tr style="border-left:solid 1px #ADBECE; border-right:solid 1px #ADBECE;border-top:solid 1px #ADBECE;background-color:#335C85">
+												<td height="20" valign="middle" style="padding-left:5px; " class="Arial11BlancBold">Aula d'estudi TR12 </td>
+												<td width="80" align="right" style="padding-right:9px;"><img  src="img/pc.gif"></td>
+											</tr>
+																									<tr>
+															<td style="padding-left:5px; padding-right:5px; padding-top:5px;" class="Arial11Black"><span class="Arial11BlackBold">15-03-2022&nbsp;</span>Dimarts  De 08:00 De 10:00</td>
+															<td width="80" class="Arial11BlueBold" align="right"  style="padding-right:9px; color:#335C85;">TR12-203</td>
+													</tr>  
+																												<tr>
+															<td style="padding-left:5px; padding-right:5px; padding-top:5px;" class="Arial11Black"><span class="Arial11BlackBold">15-03-2022&nbsp;</span>Dimarts  De 14:30 De 19:15</td>
+															<td width="80" class="Arial11BlueBold" align="right"  style="padding-right:9px; color:#335C85;">TR12-002</td>
+													</tr>  
+																												<tr>
+															<td style="padding-left:5px; padding-right:5px; padding-top:5px;" class="Arial11Black"><span class="Arial11BlackBold">16-03-2022&nbsp;</span>Dimecres  De 08:00 De 10:00</td>
+															<td width="80" class="Arial11BlueBold" align="right"  style="padding-right:9px; color:#335C85;">TR12-S03</td>
+													</tr>  
+																												<tr>
+															<td style="padding-left:5px; padding-right:5px; padding-top:5px;" class="Arial11Black"><span class="Arial11BlackBold">16-03-2022&nbsp;</span>Dimecres  De 14:30 De 19:15</td>
+															<td width="80" class="Arial11BlueBold" align="right"  style="padding-right:9px; color:#335C85;">TR12-S03</td>
+													</tr>  
+														                                                                                                                   
+											
+										</table>
+									</td>
+									</tr>                                        
+									<tr >
+										<td>&nbsp;</td>
+										<td height="24" align="right"  class=" Arial10Black" style="border-left:solid 1px #335C85; border-right:solid 1px #335C85;border-bottom:solid 1px #335C85;">
+											<span style="padding-right:7px; ">* Actualizat cada 30 minuts (Informació subjecta a variacions)</span>
+										</td>
+									</tr>
+																				<tr>
+												<td>&nbsp;</td>
+												<td  style="border-left:solid 1px #335C85; border-right:solid 1px #335C85">
+													<table border="0" width="100%" cellpadding="0" cellspacing="0" >
+														<tr style="border-left:solid 1px #ADBECE; border-right:solid 1px #ADBECE;border-top:solid 1px #ADBECE;background-color:#335C85">
+															<td height="20" valign="middle" style="padding-left:5px; " class="Arial11BlancBold">Aula d'estudi virtual (escriptori remot) </td>
+															<td width="80" align="right" style="padding-right:9px;"><img src="img/remote_desktop.png" style="width:17px;filter:  brightness(0) invert(1);" align="middle"></td>
+														</tr>
+																															<tr>
+																		<td style="padding-left:5px; padding-right:5px; padding-top:5px;" class="Arial11Black"><span class="Arial11BlackBold">15-03-2022&nbsp;</span>Dimarts  De 14:30 De 20:00</td>
+																		<td width="140" class="Arial11BlueBold" align="right"  style="padding-right:9px; color:#335C85;">
+																		TR12-203 (0 lliures)																</tr>  
+																																		<tr>
+																		<td style="padding-left:5px; padding-right:5px; padding-top:5px;" class="Arial11Black"><span class="Arial11BlackBold">16-03-2022&nbsp;</span>Dimecres  De 08:00 De 10:00</td>
+																		<td width="140" class="Arial11BlueBold" align="right"  style="padding-right:9px; color:#335C85;">
+																		TR12-202 																</tr>  
+																																		<tr>
+																		<td style="padding-left:5px; padding-right:5px; padding-top:5px;" class="Arial11Black"><span class="Arial11BlackBold">16-03-2022&nbsp;</span>Dimecres  De 14:30 De 20:00</td>
+																		<td width="140" class="Arial11BlueBold" align="right"  style="padding-right:9px; color:#335C85;">
+																		TR12-201 																</tr>  
+																	                                                                                                                   
+														
+													</table>
+												</td>
+											</tr>                                        
+											<tr >
+												<td>&nbsp;</td>
+												<td height="24" align="right"  class=" Arial10Black" style="border-left:solid 1px #335C85; border-right:solid 1px #335C85;border-bottom:solid 1px #335C85;">
+													<span style="padding-right:7px; ">* Actualizat cada 30 minuts (Informació subjecta a variacions)</span>
+												</td>
+											</tr>
+										
+								                    
+							</table>
+						      
+						                          
+            </td>
+        </tr>
+        <tr> 
+          <td height="6" colspan="2"></td>
+        </tr>
+	</table></td>
+	<td width="20" background="img/linea_entre_tablas.gif"></td>
+    <td width="50%" valign="top">
+<table width="100%"  border="0" cellpadding="0" cellspacing="0" style="margin-bottom:4px">
+					<tr> 
+					  <td height="22" width="100%" class="BordesUpDownLeftAzul BgColorAzulOscuro"><div class="Arial11BlancBoldTitolDret">Serveis</div></td>
+					  <td height="22" width="13" class="BordesUpRightDownAzul"><img src="img/1pixeltransparente.gif" height="1" width="13"></td>
+					</tr>
+				</table>
+                <table border="0" width="100%" height="38" cellpadding="0" cellspacing="0" class="" style="margin-bottom:10px">
+                  <tr> 
+                    <td width="10" class="BordesLeftParkingTTC" >&nbsp;</td>
+                    <td class="Arial11GrisParkingTTC BordesMiddleParkingTTC" ><img src="img/1pixeltransparente.gif" width="100" height="1"><br/>Canals Socials</td>
+                    <td width="30"  class="BordesMiddleParkingTTC" ><a target="_blank" title="Twitter" href="https://twitter.com/CITM_UPC"><img src="img/twitter.png" width="20" height="21" alt="twitter" border="0"></a></td>						
+                    <td width="30" class="BordesMiddleParkingTTC"  ><a target="_blank" title="Facebook" href="https://www.facebook.com/pages/Barcelona-Spain/Centre-de-la-Imatge-i-la-Tecnologia-Multimedia-de-la-UPC/415534999898?ref=ts"><img src="img/facebook.png" alt="facebook" border="0"></a></td>
+                    <td width="30" class="BordesMiddleParkingTTC"  ><a target="_blank" title="Linkedin" href="https://www.linkedin.com/school/centre-de-la-imatge-i-la-tecnologia-multim-dia-upc-/"><img src="img/linkdin.png" alt="linkedin" border="0"></a></td>                                         
+                    <td width="30"  class="BordesMiddleParkingTTC" ><a target="_blank" title="Youtube" href="https://www.youtube.com/user/09CANALCITM"><img src="img/youtube.png" alt="youtube" border="0"></a></td>								
+                    <td width="30" class="BordesMiddleParkingTTC"  ><a target="_blank" title="Vimeo" href="https://vimeo.com/citm"><img src="img/vimeo.png" alt="Vimeo" border="0"></a></td>
+                    <td width="30"  class="BordesMiddleParkingTTC" ><a target="_blank" title="Flickr" href="https://www.flickr.com/photos/citmupc/"><img src="img/flickr.png" alt="Flickr" border="0"></a></td>
+                    <td width="30"  class="BordesMiddleParkingTTC" ><a target="_blank" title="Instagram" href="https://instagram.com/citm_upc"><img src="img/instagram.png" alt="Instagram" border="0" /></a></td>
+                    <td width="30"  class="BordesMiddleParkingTTC BordesRightParkingTTC" ><a target="_blank" title="Issuu" href="https://issuu.com/citm_upc"><img src="img/issuu.png" alt="Issuu" border="0"></a></td>
+                                      </tr>
+                </table>
+			<table border="0" width="100%" height="38" cellpadding="0" cellspacing="0" class="BordesAllParkingTTC" style="margin-bottom:10px">
+				  <tr> 
+					<td width="10" class="ManoSola" onClick="window.open('gestio_parkingTTC.php?citm=true','','left=0,top=20,height=850,width=784,location=no,menubar=no,status=no,resizable=yes,scrollbars=yes');">&nbsp;</td>
+					<td class="Arial11GrisParkingTTC ManoSola" onClick="window.open('gestio_parkingTTC.php?citm=true','','left=0,top=20,height=850,width=784,location=no,menubar=no,status=no,resizable=yes,scrollbars=yes');">Servei de Pàrquing CITM</td>
+					<td width="45" class="ManoSola" onClick="window.open('gestio_parkingTTC.php?citm=true','','left=0,top=20,height=850,width=784,location=no,menubar=no,status=no,resizable=yes,scrollbars=yes');" ><img src="img/icono_parkingTTC.gif" style="padding-left:5px;"></td>
+				  </tr>
+				</table>
+				        <table border="0" width="100%" height="38" cellpadding="0" cellspacing="0" class="BordesAllParkingTTC" style="margin-bottom:10px">
+          <tr> 
+            <td width="10" class="ManoSola" onClick="window.open('peticio_prestec.php','','left=50,top=150,height=640,width=835,location=no,menubar=no,status=no,resizable=no,scrollbars=yesy');">&nbsp;</td>
+            <td class="Arial11GrisParkingTTC ManoSola" onClick="window.open('peticio_prestec.php','','left=50,top=150,height=640,width=835,location=no,menubar=no,status=no,resizable=no,scrollbars=yes');">Peticions de Material/Espais</td>
+            <td width="45" class="ManoSola" onClick="window.open('peticio_prestec.php','','left=50,top=150,height=640,width=835,location=no,menubar=no,status=no,resizable=no,scrollbars=yes');" ><img src="img/prestec_citm.gif" align="middle"></td>
+          </tr>
+        </table>   
+            <table border="0" width="100%" height="38" cellpadding="0" cellspacing="0" class="BordesAllParkingTTC" style="margin-bottom:10px">
+          <tr> 
+            <td width="10" class="ManoSola" onClick="window.open('avis_reprografia_cat.php','','left=50,top=150,height=605,width=988,location=no,menubar=no,status=no,resizable=no,scrollbars=no');">&nbsp;</td>
+            <td class="Arial11GrisParkingTTC ManoSola" onClick="window.open('avis_reprografia_citm_cat.php','','left=50,top=150,height=605,width=988,location=no,menubar=no,status=no,resizable=no,scrollbars=no');">Autoservei de Reprografia CITM</td>
+            <td width="45" class="ManoSola" onClick="window.open('avis_reprografia_cat.php','','left=50,top=150,height=605,width=988,location=no,menubar=no,status=no,resizable=no,scrollbars=no');" ><img src="img/reprografia.gif" width="24"  height="24" align="middle" style="padding-left:5px;"></td>
+          </tr>
+        </table>   
+            <table border="0" width="100%" height="38" cellpadding="0" cellspacing="0" class="BordesAllParkingTTC" style="margin-bottom:10px">
+          <tr> 
+            <td width="10" class="ManoSola" onClick="window.open('incidencies_manteniment.php','','left=50,top=150,height=270,width=613,location=no,menubar=no,status=no,resizable=no,scrollbars=no');">&nbsp;</td>
+            <td class="Arial11GrisParkingTTC ManoSola" onClick="window.open('incidencies_manteniment.php','','left=50,top=150,height=270,width=613,location=no,menubar=no,status=no,resizable=no,scrollbars=no');">Incidències i manteniment informàtic</td>
+            <td width="45" class="ManoSola" onClick="window.open('incidencies_manteniment.php','','left=50,top=150,height=270,width=613,location=no,menubar=no,status=no,resizable=no,scrollbars=no');" ><img src="img/icono_incidencia.gif" width="24"  height="24" align="middle" style="padding-left:5px;"></td>
+          </tr>
+        </table>   
+      
+	<table border="0" width="100%" height="38" cellpadding="0" cellspacing="0" class="BordesAllParkingTTC" style="margin-bottom:10px" >
+	  <tr 
+		onClick="openShadowbox('avis_icreatia_cat.php', 'iframe','Descompte en equips iCreatia',497,800);"> 
+		<td width="10" class="ManoSola">&nbsp;</td>
+		<td class="Arial11GrisParkingTTC ManoSola " >Descompte en equips iCreatia</td>          
+		<td width="45" class="ManoSola"  ><img src="img/logo-icreatia.png"  align="middle"></td>
+	  </tr>
+	</table>             
+	             <table border="0" width="100%" height="38" cellpadding="0" cellspacing="0" class="BordesAllParkingTTC" style="margin-bottom:10px">
+              <tr> 
+                <td width="10" class="ManoSola" onClick="window.open('bustia_suggeriments.php','','left=50,top=150,height=380,width=700,location=no,menubar=no,status=no,resizable=no,scrollbars=yes');">&nbsp;</td>
+                <td class="Arial11GrisParkingTTC ManoSola" onClick="window.open('bustia_suggeriments.php','','left=50,top=150,height=380,width=700,location=no,menubar=no,status=no,resizable=no,scrollbars=yes');">Bústia de Suggeriments</td>
+                <td width="45" class="ManoSola" onClick="window.open('bustia_suggeriments.php','','left=50,top=150,height=380,width=700,location=no,menubar=no,status=no,resizable=no,scrollbars=yes');" ><img src="img/bustia_suggeriments.gif" style="padding-left:1px;" align="middle"></td>
+              </tr>
+            </table> 
+		
+
+       <table width="100%"  border="0" cellpadding="0" cellspacing="0">
+            <tr> 
+              <td height="22" width="100%" class="BordesUpDownLeftAzul BgColorAzulOscuro"><div class="Arial11BlancBoldTitolDret">Avisos</div></td>
+              <td height="22" width="13" class="BordesUpRightDownAzul BgColorAzulOscuro"><img src="img/1pixeltransparente.gif" height="1" width="13"></td>
+            </tr>
+        </table>
+        <table border="0" width="100%" height="38" cellpadding="0" cellspacing="0" >
+        <tr> 
+          <td height="353" colspan="2" class="BordesDownLeftRightAzulRelleno" valign="top"> 
+            <table width="100%"  height="100%" border="0" cellspacing="0" cellpadding="0" >
+                            <tr> 
+                <td width="10" height="5"></td>
+                <td height="5" colspan="2"></td>
+                <td width="10" height="5"></td>
+              </tr>
+			  					  <tr> 
+						<td width="10" >&nbsp;</td>
+						<td colspan="2" class="BordesBorsaTreball"> 
+						   <table width="100%" border="0" cellspacing="0" cellpadding="0" height="100%">
+							<tr> 
+							  <td width="13" height="7"></td>
+							  <td > </td>
+							  <td width="13" height="7"></td>
+							</tr>
+							<tr> 
+							  <td width="13"></td>
+							  <td style="background-image:url(img/barra_borsa.gif); background-repeat:repeat-y ">
+							   <table width="100%" border="0" cellspacing="0" cellpadding="0" height="100%" >
+								<tr> 
+								  <td width="122" class="Arial11BlackBold" >&nbsp;&nbsp;BORSA DE TREBALL</td>
+								  <td align="right"><span onClick="window.open('bt_ofertes_treball_alumne.php#cv','','left=150,top=150,height=660,width=740,location=no,menubar=no,status=no,resizable=no,scrollbars=yes');" class="Arial11BlueBoldUnderlineLink">Modifica el teu C.V.</span></td>
+								</tr>
+							   </table></td>
+							  <td width="13" height="7"></td>
+							</tr>		
+							<tr> 
+							  <td width="13" height="7"></td>
+							  <td > </td>
+							  <td width="13" height="7"></td>
+							</tr>		
+							<tr> 
+							  <td width="13" height="1"></td>
+							  <td bgcolor="#EFF4F8" height="1"> <img src="img/1pixeltransparente.gif"></td>
+							  <td width="13" height="1"></td>
+							</tr>	
+							<tr> 
+							  <td width="13" height="7"></td>
+							  <td > </td>
+							  <td width="13" height="7"></td>
+							</tr>	
+																	<tr> 
+										  <td width="13" height="20"></td>
+										  <td>
+											<table width="100%" border="0" cellspacing="0" cellpadding="0" height="100%">
+												<tr> 
+													<td  width="70" align="right" valign="middle" class="Arial11Black">No vist</td>
+													<td  width="30" align="center" valign="middle"><img src="img/ga_bolita_gris.gif" title="No vist"></td>
+													<td  valign="middle"><span  class="Arial11BlueBold ManoSola" onClick="window.open('bt_ofertes_treball_detall.php?id_oferta=1282&crea_solic=true','','left=150,top=150,height=660,width=740,location=no,menubar=no,statusbar=no,resizable=no,scrollbars=yes');">02-02-2022&nbsp;Video Artist Intern</span></td>
+												</tr>
+											</table></td>
+										  <td width="13" height="20"></td>
+										</tr>
+										<tr> 
+										  <td width="13" height="7"></td>
+										  <td > </td>
+										  <td width="13" height="7"></td>
+										</tr>	
+																		<tr> 
+										  <td width="13" height="20"></td>
+										  <td>
+											<table width="100%" border="0" cellspacing="0" cellpadding="0" height="100%">
+												<tr> 
+													<td  width="70" align="right" valign="middle" class="Arial11Black">Vist</td>
+													<td  width="30" align="center" valign="middle"><img src="img/enviar_cv.gif" title="Vist"></td>
+													<td  valign="middle"><span  class="Arial11Blue ManoSola" onClick="window.open('bt_ofertes_treball_detall.php?id_oferta=1280','','left=150,top=150,height=660,width=740,location=no,menubar=no,statusbar=no,resizable=no,scrollbars=yes');">28-01-2022&nbsp;UI/UX Designer Internship</span></td>
+												</tr>
+											</table></td>
+										  <td width="13" height="20"></td>
+										</tr>
+										<tr> 
+										  <td width="13" height="7"></td>
+										  <td > </td>
+										  <td width="13" height="7"></td>
+										</tr>	
+																		<tr> 
+										  <td width="13" height="20"></td>
+										  <td>
+											<table width="100%" border="0" cellspacing="0" cellpadding="0" height="100%">
+												<tr> 
+													<td  width="70" align="right" valign="middle" class="Arial11Black">No vist</td>
+													<td  width="30" align="center" valign="middle"><img src="img/ga_bolita_gris.gif" title="No vist"></td>
+													<td  valign="middle"><span  class="Arial11BlueBold ManoSola" onClick="window.open('bt_ofertes_treball_detall.php?id_oferta=1279&crea_solic=true','','left=150,top=150,height=660,width=740,location=no,menubar=no,statusbar=no,resizable=no,scrollbars=yes');">28-01-2022&nbsp;Game Designer Internship</span></td>
+												</tr>
+											</table></td>
+										  <td width="13" height="20"></td>
+										</tr>
+										<tr> 
+										  <td width="13" height="7"></td>
+										  <td > </td>
+										  <td width="13" height="7"></td>
+										</tr>	
+																		<tr> 
+										  <td width="13" height="20"></td>
+										  <td>
+											<table width="100%" border="0" cellspacing="0" cellpadding="0" height="100%">
+												<tr> 
+													<td  width="70" align="right" valign="middle" class="Arial11Black">Vist</td>
+													<td  width="30" align="center" valign="middle"><img src="img/enviar_cv.gif" title="Vist"></td>
+													<td  valign="middle"><span  class="Arial11Blue ManoSola" onClick="window.open('bt_ofertes_treball_detall.php?id_oferta=1262','','left=150,top=150,height=660,width=740,location=no,menubar=no,statusbar=no,resizable=no,scrollbars=yes');">10-12-2021&nbsp;Professor/a de videojocs de programació en Unity</span></td>
+												</tr>
+											</table></td>
+										  <td width="13" height="20"></td>
+										</tr>
+										<tr> 
+										  <td width="13" height="7"></td>
+										  <td > </td>
+										  <td width="13" height="7"></td>
+										</tr>	
+								                            <tr> 
+                              <td height="25"></td>
+                              <td align="right" valign="top" class="Arial11Black">
+                              <span onClick="window.open('bt_ofertes_treball_alumne.php','','left=150,top=150,height=660,width=800,location=no,menubar=no,status=no,resizable=no,scrollbars=yes');" 
+                              		class="Arial11BlueBoldUnderlineLink">Veure totes les ofertes</span></td>
+                              <td></td>
+                            </tr>
+						  </table></td>
+						<td width="10" height="36">&nbsp;</td>
+					  </tr>
+					  <tr> 
+						<td width="10" height="8"></td>
+						<td height="8" colspan="2"></td>
+						<td width="10" height="8"></td>
+					  </tr>
+                            <tr> 
+                <td colspan="4"></td>
+              </tr>
+            </table></td>
+        </tr>
+      </table></td>
+    <td width="10"></td>
+  </tr>
+  <tr> 
+    <td width="10" height="16"><img src="img/10pixeles-blanco.gif"></td>
+    <td width="50%" height="16"><img src="img/blanco360.gif" width="360" ></td>
+    <td width="20" height="16"><img src="img/linea_entre_tablas.gif" width="20" height="1"></td>
+    <td width="50%" height="16"><img src="img/blanco360.gif" width="360" ></td>
+    <td width="10" height="16"><img src="img/10pixeles-blanco.gif"></td>
+  </tr>  
+</table>
+<script src="includes/javascript/jquery.tooltip/jquery.tooltip.js"></script>
+<script>
+$(document).ready(function() {
+	$('#appleOnCampus').tooltip({ 		
+		delay: 0 
+		,fade: 250
+		,showURL: false 
+		//,track: true	
+	});
+	
+});
+</script>
+</body>
+</html>
