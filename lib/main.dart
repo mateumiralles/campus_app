@@ -2,6 +2,7 @@ import 'package:campus_app/scraper.dart';
 // Scraper.getDataClasses()
 import 'package:flutter/material.dart';
 
+
 void main() {
   runApp(const MyApp());
 }
@@ -19,8 +20,8 @@ class MyApp extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ElevatedButton(
-                onPressed: () => {
-                  Scraper.getDataMails(),
+                onPressed: () {
+                  Scraper.getDataClasses();
                 },
                 child: const Text('GO!'),
               ),

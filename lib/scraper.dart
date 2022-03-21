@@ -1,10 +1,11 @@
 import 'dart:io';
+import 'package:flutter/services.dart';
 import 'package:html/parser.dart';
 
 class Scraper {
-  static void getDataClasses() {
+  static void getDataClasses() async {
     List<String> classesInfoList = [];
-    var data = File('login_citm.html').readAsStringSync();
+    String data = await rootBundle.loadString('assets/login_citm.html');
     final html = parse(data);
 
     final classesTableQuery = html.querySelectorAll(
@@ -45,23 +46,21 @@ class Scraper {
       //GET name
       String className = classesNameQuery[j].text.toString();
 
-      /*
-      print(teacherName);
-      print(classroom);
-      print(dateTime);
-      print(className);
-*/
-
       closeClasses.add(NextClass(DateTime.parse('$year-$month-$day $time:00'),
           teacherName, className, classroom));
-
-      print(closeClasses[j].name);
     }
+    
+    for (int i = 0; i < closeClasses.length; i++) {
+        print('${i + 1}- Nom: ${closeClasses[i].name}');
+        print('${i + 1}- Profe: ${closeClasses[i].teacher}');
+        print('${i + 1}- Aula: ${closeClasses[i].classroom}');
+        print('${i + 1}- data: ${closeClasses[i].time}');
+        print('---------------------------------------');
+      }
   }
 
-  static void getDataMails() {
-    //TODO: Error Lectura fitxer al debug
-    var data = File('msg_citm.html').readAsStringSync();
+  static void getDataMails() async {
+    String data = await rootBundle.loadString('assets/msg_citm.html');
     final html = parse(data);
 
     final mailInfoQuery = html.querySelectorAll(
@@ -79,7 +78,6 @@ class Scraper {
       mailDateList.add(
           '${mailInfoQuery[i + 1].text.trim().split(' ')[0].split("/")[2]}-${mailInfoQuery[i + 1].text.trim().split(' ')[0].split("/")[1]}-${mailInfoQuery[i + 1].text.trim().split(' ')[0].split("/")[0]}');
       mailTimeList.add(mailInfoQuery[i + 1].text.trim().split(' ')[1]);
-
     }
 
     List<bool> mailUnreadCheckList = [];
@@ -103,16 +101,21 @@ class Scraper {
     }
 
     for (int i = 0; i < mailAuthorsList.length; i++) {
-      recievedMails.add(Mail(mailUnreadCheckList[i], mailAuthorsList[i], mailSubjectList[i], DateTime.parse('${mailDateList[i]} ${mailTimeList[i]}:00')));
+      recievedMails.add(Mail(
+          mailUnreadCheckList[i],
+          mailAuthorsList[i],
+          mailSubjectList[i],
+          DateTime.parse('${mailDateList[i]} ${mailTimeList[i]}:00')));
     }
-    
-  print("xdlolmafia");
 
     /*
-    print(mailInfoQuery[1].text.trim());
-    print(mailInfoQuery[2].text.trim());
-    print(mailUnreadQuery[10].attributes);
-    print(mailSubjectQuery[3].text);
+    for (int i = 0; i < recievedMails.length; i++) {
+    print('${i + 1}- No llegit? ${recievedMails[i].unread}');
+    print('${i + 1}- Autor: ${recievedMails[i].author}');
+    print('${i + 1}- Assumpte: ${recievedMails[i].subject}');
+    print('${i + 1}- data: ${recievedMails[i].time}');
+    print('---------------------------------------');
+  }
     */
   }
 }
@@ -144,8 +147,7 @@ class NextClass {
 
 List<NextClass> closeClasses = [];
 List<Mail> recievedMails = [];
-void main() {
-  Scraper.getDataMails();
+
 
 /*  
   //COMPROVACIÓ .getDataClasses()
@@ -168,4 +170,4 @@ void main() {
     print('---------------------------------------');
   }
 */
-}
+

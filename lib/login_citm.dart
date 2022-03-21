@@ -7,7 +7,7 @@ void citmFetch() async {
 
   Future<String> homeFetch() async {
     var url = 'https://citm.fundacioupc.com/inici.php';
-    var headers = {"Cookie": "PHPSESSID=4k7usbcnfaje1v0to3muacafcl"};
+    var headers = {"Cookie": "PHPSESSID=c4hd53fpp3s6u09gf5dsq541tv"};
 
     final response = await http.get(Uri.parse(url), headers: headers);
 
@@ -21,7 +21,7 @@ void citmFetch() async {
 
   Future<String> msgFetch() async {
     var url = 'https://citm.fundacioupc.com/missatges_llistat.php';
-    var headers = {"Cookie": "PHPSESSID=4k7usbcnfaje1v0to3muacafcl"};
+    var headers = {"Cookie": "PHPSESSID=c4hd53fpp3s6u09gf5dsq541tv"};
 
     final response = await http.get(Uri.parse(url), headers: headers);
 
@@ -34,10 +34,10 @@ void citmFetch() async {
   }
 
   final homeResponse = await homeFetch();
-  File(filename).writeAsString(homeResponse);
+  File('../assets/$filename').writeAsString(homeResponse);
 
   final msgResponse = await msgFetch();
-  File(filename2).writeAsString(msgResponse);
+  File('../assets/$filename2').writeAsString(msgResponse);
 }
 
 void main() async {
