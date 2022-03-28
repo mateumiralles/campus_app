@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:html/parser.dart';
 
@@ -6,6 +5,9 @@ class Scraper {
   static void getDataClasses() async {
     List<String> classesInfoList = [];
     String data = await rootBundle.loadString('assets/login_citm.html');
+    
+    closeClasses.clear();//restart list
+    
     final html = parse(data);
 
     final classesTableQuery = html.querySelectorAll(
@@ -17,6 +19,7 @@ class Scraper {
     for (int i = 1; i < classesTableQuery.nodes.length; i++) {
       if (classesTableQuery.nodes[i].text.toString().trim() != "") {
         classesInfoList.add(classesTableQuery.nodes[i].text.toString().trim());
+        
       }
     }
 
@@ -46,22 +49,19 @@ class Scraper {
       //GET name
       String className = classesNameQuery[j].text.toString();
 
+      
       closeClasses.add(NextClass(DateTime.parse('$year-$month-$day $time:00'),
           teacherName, className, classroom));
     }
-    
-    for (int i = 0; i < closeClasses.length; i++) {
-        print('${i + 1}- Nom: ${closeClasses[i].name}');
-        print('${i + 1}- Profe: ${closeClasses[i].teacher}');
-        print('${i + 1}- Aula: ${closeClasses[i].classroom}');
-        print('${i + 1}- data: ${closeClasses[i].time}');
-        print('---------------------------------------');
-      }
+    print(closeClasses.length);
   }
 
   static void getDataMails() async {
     String data = await rootBundle.loadString('assets/msg_citm.html');
     final html = parse(data);
+
+    receivedMails.clear();//restart list
+    
 
     final mailInfoQuery = html.querySelectorAll(
         'html > body > table > tbody > tr > td > form > table > tbody > tr > td > table > tbody > tr > td.Arial10Black');
@@ -100,23 +100,24 @@ class Scraper {
       mailSubjectList.add(mailSubjectQuery[i].text);
     }
 
+    receivedMails=[];
     for (int i = 0; i < mailAuthorsList.length; i++) {
-      recievedMails.add(Mail(
+      receivedMails.add(Mail(
           mailUnreadCheckList[i],
           mailAuthorsList[i],
           mailSubjectList[i],
           DateTime.parse('${mailDateList[i]} ${mailTimeList[i]}:00')));
     }
 
-    /*
-    for (int i = 0; i < recievedMails.length; i++) {
-    print('${i + 1}- No llegit? ${recievedMails[i].unread}');
-    print('${i + 1}- Autor: ${recievedMails[i].author}');
-    print('${i + 1}- Assumpte: ${recievedMails[i].subject}');
-    print('${i + 1}- data: ${recievedMails[i].time}');
+    
+    for (int i = 0; i < receivedMails.length; i++) {
+    print('${i+1}- No llegit? ${receivedMails[i].unread}');
+    print('${i+1}- Autor: ${receivedMails[i].author}');
+    print('${i+1}- Assumpte: ${receivedMails[i].subject}');
+    print('${i+1}- data: ${receivedMails[i].time}');
     print('---------------------------------------');
   }
-    */
+    
   }
 }
 
@@ -146,27 +147,27 @@ class NextClass {
 }
 
 List<NextClass> closeClasses = [];
-List<Mail> recievedMails = [];
+List<Mail> receivedMails = [];
 
 
 /*  
   //COMPROVACIÓ .getDataClasses()
   for (int i = 0; i < closeClasses.length; i++) {
-    print('${i + 1}- Nom: ${closeClasses[i].name}');
-    print('${i + 1}- Profe: ${closeClasses[i].teacher}');
-    print('${i + 1}- Aula: ${closeClasses[i].classroom}');
-    print('${i + 1}- data: ${closeClasses[i].time}');
+    print('${i+1}- Nom: ${closeClasses[i].name}');
+    print('${i+1}- Profe: ${closeClasses[i].teacher}');
+    print('${i+1}- Aula: ${closeClasses[i].classroom}');
+    print('${i+1}- data: ${closeClasses[i].time}');
     print('---------------------------------------');
   }
 */
 
  /*
   //COMPROVACIÓ .getDataMails()
-  for (int i = 0; i < recievedMails.length; i++) {
-    print('${i + 1}- No llegit? ${recievedMails[i].unread}');
-    print('${i + 1}- Autor: ${recievedMails[i].author}');
-    print('${i + 1}- Assumpte: ${recievedMails[i].subject}');
-    print('${i + 1}- data: ${recievedMails[i].time}');
+  for (int i = 0; i < receivedMails.length; i++) {
+    print('${i+1}- No llegit? ${receivedMails[i].unread}');
+    print('${i+1}- Autor: ${receivedMails[i].author}');
+    print('${i+1}- Assumpte: ${receivedMails[i].subject}');
+    print('${i+1}- data: ${receivedMails[i].time}');
     print('---------------------------------------');
   }
 */

@@ -1,7 +1,8 @@
 import 'package:campus_app/scraper.dart';
-// Scraper.getDataClasses()
+import 'package:campus_app/screens/main_screen.dart';
+import 'package:campus_app/screens/received_mails_screen.dart';
+import 'package:campus_app/screens/scraping_test_screen.dart';
 import 'package:flutter/material.dart';
-
 
 void main() {
   runApp(const MyApp());
@@ -12,23 +13,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    Scraper.getDataClasses();
+    Scraper.getDataMails();
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  Scraper.getDataClasses();
-                },
-                child: const Text('GO!'),
-              ),
-            ],
-          ),
-        ),
-      ),
+      //home: ScrapingTestScreen(),
+      //home: ReceivedMailsScreen(),
+      home: MainScreen(),
+      
     );
   }
 }
+
