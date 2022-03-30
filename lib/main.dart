@@ -13,8 +13,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Scraper.getDataClasses();
-    Scraper.getDataMails();
+   
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       //home: ScrapingTestScreen(),

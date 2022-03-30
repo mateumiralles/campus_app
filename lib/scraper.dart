@@ -1,13 +1,29 @@
-import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 import 'package:html/parser.dart';
 
+Future<String> fetch({required String url}) async {
+      var headers = {"Cookie": "PHPSESSID=4jbcukjtngvgsj6kfld1pf7aq7"};
+
+      final response = await http.get(Uri.parse(url), headers: headers);
+
+      if (response.statusCode == 200) {
+        final htmlCitm = response.body.toString();
+        return htmlCitm;
+      } else {
+        throw Exception('Failed to load data!');
+      }
+    }
+
 class Scraper {
+
   static void getDataClasses() async {
+    
+
     List<String> classesInfoList = [];
-    String data = await rootBundle.loadString('assets/login_citm.html');
-    
-    closeClasses.clear();//restart list
-    
+    String data = await fetch(url: 'https://citm.fundacioupc.com/inici.php');
+
+    closeClasses.clear(); //restart list
+
     final html = parse(data);
 
     final classesTableQuery = html.querySelectorAll(
@@ -19,7 +35,6 @@ class Scraper {
     for (int i = 1; i < classesTableQuery.nodes.length; i++) {
       if (classesTableQuery.nodes[i].text.toString().trim() != "") {
         classesInfoList.add(classesTableQuery.nodes[i].text.toString().trim());
-        
       }
     }
 
@@ -49,7 +64,6 @@ class Scraper {
       //GET name
       String className = classesNameQuery[j].text.toString();
 
-      
       closeClasses.add(NextClass(DateTime.parse('$year-$month-$day $time:00'),
           teacherName, className, classroom));
     }
@@ -57,11 +71,10 @@ class Scraper {
   }
 
   static void getDataMails() async {
-    String data = await rootBundle.loadString('assets/msg_citm.html');
+    String data = await fetch(url: 'https://citm.fundacioupc.com/missatges_llistat.php');
     final html = parse(data);
 
-    receivedMails.clear();//restart list
-    
+    receivedMails.clear(); //restart list
 
     final mailInfoQuery = html.querySelectorAll(
         'html > body > table > tbody > tr > td > form > table > tbody > tr > td > table > tbody > tr > td.Arial10Black');
@@ -100,7 +113,7 @@ class Scraper {
       mailSubjectList.add(mailSubjectQuery[i].text);
     }
 
-    receivedMails=[];
+    receivedMails = [];
     for (int i = 0; i < mailAuthorsList.length; i++) {
       receivedMails.add(Mail(
           mailUnreadCheckList[i],
@@ -109,15 +122,13 @@ class Scraper {
           DateTime.parse('${mailDateList[i]} ${mailTimeList[i]}:00')));
     }
 
-    
     for (int i = 0; i < receivedMails.length; i++) {
-    print('${i+1}- No llegit? ${receivedMails[i].unread}');
-    print('${i+1}- Autor: ${receivedMails[i].author}');
-    print('${i+1}- Assumpte: ${receivedMails[i].subject}');
-    print('${i+1}- data: ${receivedMails[i].time}');
-    print('---------------------------------------');
-  }
-    
+      print('${i + 1}- No llegit? ${receivedMails[i].unread}');
+      print('${i + 1}- Autor: ${receivedMails[i].author}');
+      print('${i + 1}- Assumpte: ${receivedMails[i].subject}');
+      print('${i + 1}- data: ${receivedMails[i].time}');
+      print('---------------------------------------');
+    }
   }
 }
 
