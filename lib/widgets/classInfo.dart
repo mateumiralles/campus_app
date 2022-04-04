@@ -65,12 +65,17 @@ class _ClassInfoState extends State<ClassInfo> {
         loaded = true;
       });
     }
-    print(closeClasses.length);
+    print('NumClasses: ${closeClasses.length}');
   }
 
+@override
+  void initState() {
+    super.initState();
+    getDataClasses();
+  }
   @override
   Widget build(BuildContext context) {
-    getDataClasses();
+    
     return Expanded(
       flex: 2,
       child: Container(
