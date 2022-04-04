@@ -2,7 +2,7 @@ import 'package:http/http.dart' as http;
 import 'package:html/parser.dart';
 
 Future<String> fetch({required String url}) async {
-      var headers = {"Cookie": "PHPSESSID=4jbcukjtngvgsj6kfld1pf7aq7"};
+      var headers = {"Cookie": "PHPSESSID=joevoa6sutp059orj6ptn4s9gj"};
 
       final response = await http.get(Uri.parse(url), headers: headers);
 
@@ -15,60 +15,6 @@ Future<String> fetch({required String url}) async {
     }
 
 class Scraper {
-
-  static void getDataClasses() async {
-    
-
-    List<String> classesInfoList = [];
-    String data = await fetch(url: 'https://citm.fundacioupc.com/inici.php');
-
-    closeClasses.clear(); //restart list
-
-    final html = parse(data);
-
-    final classesTableQuery = html.querySelectorAll(
-        'html > body > table > tbody > tr > td > table > tbody > tr > td > table > tbody > tr > td > table > tbody')[0];
-
-    final classesNameQuery = html.querySelectorAll(
-        'html > body > table > tbody > tr > td > table > tbody > tr > td > table > tbody > tr > td > table > tbody > tr > td.Arial11Black > a ');
-
-    for (int i = 1; i < classesTableQuery.nodes.length; i++) {
-      if (classesTableQuery.nodes[i].text.toString().trim() != "") {
-        classesInfoList.add(classesTableQuery.nodes[i].text.toString().trim());
-      }
-    }
-
-    for (int j = 0; j < classesInfoList.length; j++) {
-      List<String> splitAux = classesInfoList[j].split('(');
-
-      //GET dateTime
-      String dateTime = classesInfoList[j].substring(0, 16);
-
-      //Parse dateTime
-      String date, time;
-      date = dateTime.split(' ')[0].trim();
-      time = dateTime.split(' ')[1].trim();
-
-      String year, month, day;
-
-      year = date.split('-')[2].trim();
-      month = date.split('-')[1].trim();
-      day = date.split('-')[0].trim();
-
-      //GET teacher
-      String teacherName = splitAux[1].split(')')[0].toString();
-
-      //GET classroom
-      String classroom = splitAux[1].split(')')[1].toString().trim();
-
-      //GET name
-      String className = classesNameQuery[j].text.toString();
-
-      closeClasses.add(NextClass(DateTime.parse('$year-$month-$day $time:00'),
-          teacherName, className, classroom));
-    }
-    print(closeClasses.length);
-  }
 
   static void getDataMails() async {
     String data = await fetch(url: 'https://citm.fundacioupc.com/missatges_llistat.php');
@@ -157,7 +103,6 @@ class NextClass {
   );
 }
 
-List<NextClass> closeClasses = [];
 List<Mail> receivedMails = [];
 
 

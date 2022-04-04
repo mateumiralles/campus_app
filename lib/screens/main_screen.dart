@@ -8,8 +8,8 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Scraper.getDataClasses();
-    Scraper.getDataMails();
+    //Scraper.getDataClasses();
+    //Scraper.getDataMails();
     return Scaffold(
         backgroundColor: Colors.blue[200],
         body: SafeArea(
@@ -17,14 +17,14 @@ class MainScreen extends StatelessWidget {
             padding: const EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                classInfo(),
-                const SizedBox(height: 20),
-                const Expanded(
+              children: const [
+                ClassInfo(),
+                SizedBox(height: 20),
+                Expanded(
                   child: MainScreenBtn('MISSATGES', Icons.mail_rounded),
                 ),
-                const SizedBox(height: 20),
-                const Expanded(
+                SizedBox(height: 20),
+                Expanded(
                   child: MainScreenBtn('TASQUES', Icons.task_rounded),
                 ),
               ],
