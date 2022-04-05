@@ -1,4 +1,3 @@
-import 'package:campus_app/scraper.dart';
 import 'package:campus_app/widgets/classInfo.dart';
 import 'package:campus_app/widgets/mainScreenBtn.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +7,6 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Scraper.getDataMails();
     return Scaffold(
         backgroundColor: Colors.blue[200],
         body: SafeArea(

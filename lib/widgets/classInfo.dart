@@ -1,4 +1,4 @@
-import 'package:campus_app/scraper.dart';
+import 'package:campus_app/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:html/parser.dart';
 
@@ -68,14 +68,14 @@ class _ClassInfoState extends State<ClassInfo> {
     print('NumClasses: ${closeClasses.length}');
   }
 
-@override
+  @override
   void initState() {
     super.initState();
     getDataClasses();
   }
+
   @override
   Widget build(BuildContext context) {
-    
     return Expanded(
       flex: 2,
       child: Container(
@@ -156,4 +156,17 @@ class _ClassInfoState extends State<ClassInfo> {
       ),
     );
   }
+}
+
+
+class NextClass {
+  DateTime time;
+  String teacher, name, classroom;
+
+  NextClass(
+    this.time,
+    this.teacher,
+    this.name,
+    this.classroom,
+  );
 }

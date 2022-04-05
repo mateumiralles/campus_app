@@ -1,4 +1,4 @@
-import 'package:campus_app/widgets/mailList.dart';
+import 'package:campus_app/widgets/recievedMailsList.dart';
 import 'package:flutter/material.dart';
 
 class MailsScreen extends StatefulWidget {
@@ -6,6 +6,19 @@ class MailsScreen extends StatefulWidget {
 
   @override
   State<MailsScreen> createState() => _MailsScreenState();
+}
+
+class Mail {
+  bool unread;
+  String author, subject;
+  DateTime time;
+
+  Mail(
+    this.unread,
+    this.author,
+    this.subject,
+    this.time,
+  );
 }
 
 class _MailsScreenState extends State<MailsScreen> {
@@ -48,7 +61,7 @@ class _MailsScreenState extends State<MailsScreen> {
           )
         ],
       ),
-      body: MailList(),
+      body: RecievedMailsList(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(builder: (context) {
