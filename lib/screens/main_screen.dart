@@ -1,5 +1,5 @@
-import 'package:campus_app/widgets/classInfo.dart';
-import 'package:campus_app/widgets/mainScreenBtn.dart';
+import 'package:campus_app/widgets/class_info.dart';
+import 'package:campus_app/widgets/main_screen_btn.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatelessWidget {

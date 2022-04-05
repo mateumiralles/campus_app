@@ -6,22 +6,28 @@ class MainScreenBtn extends StatelessWidget {
   final String text;
   final double iconSize;
 
-  const MainScreenBtn(this.text, this.icon, {Key? key, this.iconSize = 50.0})
-      : super(key: key);
+  const MainScreenBtn(this.text, this.icon, {Key? key, this.iconSize = 50.0}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
       onPressed: () {
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) {
-            if (text == 'MISSATGES') {
-              return const MailsScreen();
-            } else {
-              return Scaffold(appBar: AppBar(title: const Text('TASQUES'),),  body:const Center(child: Text('PANTALLA DE TASQUES!')),);
-            }
-          },
-        ));
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) {
+              if (text == 'MISSATGES') {
+                return const MailsScreen();
+              } else {
+                return Scaffold(
+                  appBar: AppBar(
+                    title: const Text('TASQUES'),
+                  ),
+                  body: const Center(child: Text('PANTALLA DE TASQUES!')),
+                );
+              }
+            },
+          ),
+        );
       },
       label: Text(
         text,

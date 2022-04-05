@@ -1,6 +1,7 @@
-import 'package:campus_app/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:html/parser.dart';
+
+import '../citm.dart';
 
 class ClassInfo extends StatefulWidget {
   const ClassInfo({Key? key}) : super(key: key);
@@ -15,57 +16,58 @@ class _ClassInfoState extends State<ClassInfo> {
 
   getDataClasses() async {
     List<String> classesInfoList = [];
-    String data = await fetch(url: 'https://citm.fundacioupc.com/inici.php');
+    String data = await CITM.fetch('/inici.php');
 
     closeClasses.clear(); //restart list
 
     final html = parse(data);
 
     final classesTableQuery = html.querySelectorAll(
-        'html > body > table > tbody > tr > td > table > tbody > tr > td > table > tbody > tr > td > table > tbody')[0];
+        'html > body > table > tbody > tr > td > table > tbody > tr > td > table > tbody > tr > td > table > tbody');
+    if (classesTableQuery.isNotEmpty) {
+      final classesTableQuery0 = classesTableQuery[0];
+      final classesNameQuery = html.querySelectorAll(
+          'html > body > table > tbody > tr > td > table > tbody > tr > td > table > tbody > tr > td > table > tbody > tr > td.Arial11Black > a ');
 
-    final classesNameQuery = html.querySelectorAll(
-        'html > body > table > tbody > tr > td > table > tbody > tr > td > table > tbody > tr > td > table > tbody > tr > td.Arial11Black > a ');
-
-    for (int i = 1; i < classesTableQuery.nodes.length; i++) {
-      if (classesTableQuery.nodes[i].text.toString().trim() != "") {
-        classesInfoList.add(classesTableQuery.nodes[i].text.toString().trim());
+      for (int i = 1; i < classesTableQuery0.nodes.length; i++) {
+        if (classesTableQuery0.nodes[i].text.toString().trim() != "") {
+          classesInfoList.add(classesTableQuery0.nodes[i].text.toString().trim());
+        }
       }
+
+      for (int j = 0; j < classesInfoList.length; j++) {
+        List<String> splitAux = classesInfoList[j].split('(');
+
+        //GET dateTime
+        String dateTime = classesInfoList[j].substring(0, 16);
+
+        //Parse dateTime
+        String date, time;
+        date = dateTime.split(' ')[0].trim();
+        time = dateTime.split(' ')[1].trim();
+
+        String year, month, day;
+
+        year = date.split('-')[2].trim();
+        month = date.split('-')[1].trim();
+        day = date.split('-')[0].trim();
+
+        //GET teacher
+        String teacherName = splitAux[1].split(')')[0].toString();
+
+        //GET classroom
+        String classroom = splitAux[1].split(')')[1].toString().trim();
+
+        //GET name
+        String className = classesNameQuery[j].text.toString();
+
+        closeClasses.add(NextClass(DateTime.parse('$year-$month-$day $time:00'), teacherName, className, classroom));
+      }
+      debugPrint('NumClasses: ${closeClasses.length}');
     }
-
-    for (int j = 0; j < classesInfoList.length; j++) {
-      List<String> splitAux = classesInfoList[j].split('(');
-
-      //GET dateTime
-      String dateTime = classesInfoList[j].substring(0, 16);
-
-      //Parse dateTime
-      String date, time;
-      date = dateTime.split(' ')[0].trim();
-      time = dateTime.split(' ')[1].trim();
-
-      String year, month, day;
-
-      year = date.split('-')[2].trim();
-      month = date.split('-')[1].trim();
-      day = date.split('-')[0].trim();
-
-      //GET teacher
-      String teacherName = splitAux[1].split(')')[0].toString();
-
-      //GET classroom
-      String classroom = splitAux[1].split(')')[1].toString().trim();
-
-      //GET name
-      String className = classesNameQuery[j].text.toString();
-
-      setState(() {
-        closeClasses.add(NextClass(DateTime.parse('$year-$month-$day $time:00'),
-            teacherName, className, classroom));
-        loaded = true;
-      });
-    }
-    print('NumClasses: ${closeClasses.length}');
+    setState(() {
+      loaded = true;
+    });
   }
 
   @override
@@ -79,9 +81,7 @@ class _ClassInfoState extends State<ClassInfo> {
     return Expanded(
       flex: 2,
       child: Container(
-        decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(25))),
+        decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(25))),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -99,9 +99,7 @@ class _ClassInfoState extends State<ClassInfo> {
               height: 70,
               decoration: const BoxDecoration(
                 color: Colors.blue,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(25),
-                    topRight: Radius.circular(25)),
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(25), topRight: Radius.circular(25)),
               ),
             ),
             Expanded(
@@ -114,35 +112,27 @@ class _ClassInfoState extends State<ClassInfo> {
                             children: [
                               Text(
                                   '${closeClasses[index].time.day}/${closeClasses[index].time.month}/${closeClasses[index].time.year} - ${closeClasses[index].time.hour}:${closeClasses[index].time.minute == 0 ? '00' : closeClasses[index].time.minute}',
-                                  style: const TextStyle(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.bold)),
+                                  style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
                               const SizedBox(
                                 height: 3,
                               ),
-                              Text(closeClasses[index].name,
-                                  style: const TextStyle(fontSize: 15)),
+                              Text(closeClasses[index].name, style: const TextStyle(fontSize: 15)),
                             ],
                           ),
                           subtitle: closeClasses[index].classroom.length <= 15
                               ? Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(closeClasses[index].teacher,
-                                        style: const TextStyle(fontSize: 13)),
-                                    Text(closeClasses[index].classroom,
-                                        style: const TextStyle(fontSize: 13)),
+                                    Text(closeClasses[index].teacher, style: const TextStyle(fontSize: 13)),
+                                    Text(closeClasses[index].classroom, style: const TextStyle(fontSize: 13)),
                                   ],
                                 )
                               : Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(closeClasses[index].teacher,
-                                        style: const TextStyle(fontSize: 13)),
+                                    Text(closeClasses[index].teacher, style: const TextStyle(fontSize: 13)),
                                     Text(closeClasses[index].classroom,
-                                        textAlign: TextAlign.end,
-                                        style: const TextStyle(fontSize: 13)),
+                                        textAlign: TextAlign.end, style: const TextStyle(fontSize: 13)),
                                   ],
                                 ),
                         );
@@ -157,7 +147,6 @@ class _ClassInfoState extends State<ClassInfo> {
     );
   }
 }
-
 
 class NextClass {
   DateTime time;

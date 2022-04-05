@@ -1,4 +1,4 @@
-import 'package:campus_app/widgets/recievedMailsList.dart';
+import 'package:campus_app/widgets/recieved_mails_list.dart';
 import 'package:flutter/material.dart';
 
 class MailsScreen extends StatefulWidget {
@@ -40,14 +40,13 @@ class _MailsScreenState extends State<MailsScreen> {
                           value: e,
                           //TODO: Treure Espai sobrant desplegable
                           child: Text(e,
-                              style: const TextStyle(fontSize: 15),
-                              textAlign: TextAlign.right),
+                              style: const TextStyle(fontSize: 15), textAlign: TextAlign.right),
                           alignment: Alignment.centerRight,
                         ))
                     .toList(),
-                onChanged: (_value)=>{
-                  setState((){
-                    _value == _folders[0] ?  _inbox=true : _inbox=false;
+                onChanged: (_value) => {
+                  setState(() {
+                    _value == _folders[0] ? _inbox = true : _inbox = false;
                   })
                 },
                 hint: const Icon(Icons.folder),
