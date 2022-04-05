@@ -19,7 +19,10 @@ class MailList extends StatelessWidget {
                 child: receivedMails[index].unread
                     ? const Icon(Icons.mark_email_unread_rounded,
                         color: Colors.blue)
-                    : const Icon(Icons.email_rounded),
+                    : const Icon(
+                        Icons.email_rounded,
+                        color: Colors.grey,
+                      ),
               ),
               Expanded(
                 child: Column(
@@ -47,12 +50,13 @@ class MailList extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 3),
+                    const SizedBox(height: 3),
                     Text(receivedMails[index].subject,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 14,
                             color: Colors.black,
-                            fontWeight: FontWeight.bold),textAlign: TextAlign.left),
+                            fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.left),
                   ],
                 ),
               )

@@ -2,7 +2,7 @@ import 'package:http/http.dart' as http;
 import 'package:html/parser.dart';
 
 Future<String> fetch({required String url}) async {
-      var headers = {"Cookie": "PHPSESSID=joevoa6sutp059orj6ptn4s9gj"};
+      var headers = {"Cookie": "PHPSESSID=t65nt3udd56lt73a8fqesma27n"};
 
       final response = await http.get(Uri.parse(url), headers: headers);
 

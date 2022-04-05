@@ -1,7 +1,4 @@
-import 'package:campus_app/scraper.dart';
 import 'package:campus_app/screens/main_screen.dart';
-import 'package:campus_app/screens/received_mails_screen.dart';
-import 'package:campus_app/screens/scraping_test_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {

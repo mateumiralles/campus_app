@@ -8,8 +8,7 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //Scraper.getDataClasses();
-    //Scraper.getDataMails();
+    Scraper.getDataMails();
     return Scaffold(
         backgroundColor: Colors.blue[200],
         body: SafeArea(
