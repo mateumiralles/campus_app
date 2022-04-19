@@ -1,4 +1,4 @@
-import 'package:campus_app/widgets/recieved_mails_list.dart';
+import 'package:campus_app/widgets/received_mails_list_2.dart';
 import 'package:flutter/material.dart';
 
 class MailsScreen extends StatefulWidget {
@@ -60,7 +60,7 @@ class _MailsScreenState extends State<MailsScreen> {
           )
         ],
       ),
-      body: RecievedMailsList(),
+      body: ReceivedMailsList(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(builder: (context) {

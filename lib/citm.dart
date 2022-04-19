@@ -1,3 +1,4 @@
+import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
 
 final phpSessionRegexp = RegExp(r"PHPSESSID=([^;]*)");
@@ -59,4 +60,21 @@ class CITM {
     }
     return response.body.toString();
   }
+
+  static Future<int> mailsPageCount({required String folder}) async {
+  String numFolder = folder == 'Received' ? '0' : '1';
+
+    
+  String data = await CITM.fetch('missatges_llistat.php', params: {"carpeta_actual": numFolder});
+
+  final html = parse(data);
+
+  final pagCountObject = html.querySelectorAll(
+      'html > body > table > tbody > tr > td > form > table > tbody > tr > td > table > tbody > tr > td.BgColorAzulClaro.Arial10Black');
+
+  int numPages = int.parse(pagCountObject[0].text.split(' ').last);
+
+  print('Numero de pagines de mails: $numPages');
+  return numPages;
+}
 }

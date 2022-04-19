@@ -4,21 +4,21 @@ import 'package:html/parser.dart';
 import '../citm.dart';
 import '../screens/mails_screen.dart';
 
-class RecievedMailsList extends StatefulWidget {
-  const RecievedMailsList({
+class ReceivedMailsList extends StatefulWidget {
+  const ReceivedMailsList({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<RecievedMailsList> createState() => _RecievedMailsListState();
+  State<ReceivedMailsList> createState() => _ReceivedMailsListState();
 }
 
-class _RecievedMailsListState extends State<RecievedMailsList> {
+class _ReceivedMailsListState extends State<ReceivedMailsList> {
   List<Mail> receivedMails = [];
   bool _loaded = false;
 
-  getDataRecievedMails() async {
-    String data = await CITM.fetch('missatges_llistat.php', params: {"carpeta_actual": "0"});
+  getDataReceivedMails() async {
+    String data = await CITM.fetch('missatges_llistat.php' , params: {"carpeta_actual": "0"});
     final html = parse(data);
 
     receivedMails.clear(); //restart list
@@ -70,7 +70,7 @@ class _RecievedMailsListState extends State<RecievedMailsList> {
   @override
   void initState() {
     super.initState();
-    getDataRecievedMails();
+    getDataReceivedMails();
   }
 
   @override
