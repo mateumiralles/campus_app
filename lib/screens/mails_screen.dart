@@ -8,19 +8,6 @@ class MailsScreen extends StatefulWidget {
   State<MailsScreen> createState() => _MailsScreenState();
 }
 
-class Mail {
-  bool unread;
-  String author, subject;
-  DateTime time;
-
-  Mail(
-    this.unread,
-    this.author,
-    this.subject,
-    this.time,
-  );
-}
-
 class _MailsScreenState extends State<MailsScreen> {
   final List<String> _folders = ['Rebuts', 'Enviats'];
   bool _inbox = true;
@@ -60,7 +47,7 @@ class _MailsScreenState extends State<MailsScreen> {
           )
         ],
       ),
-      body: ReceivedMailsList(),
+      body: const ReceivedMailsList(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(builder: (context) {
@@ -73,7 +60,7 @@ class _MailsScreenState extends State<MailsScreen> {
           }));
         },
         backgroundColor: Colors.blue,
-        child: Icon(
+        child: const Icon(
           Icons.draw_rounded,
           color: Colors.white,
         ),

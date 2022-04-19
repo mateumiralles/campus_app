@@ -1,5 +1,4 @@
 import 'package:campus_app/citm.dart';
-import 'package:campus_app/screens/mails_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:html/parser.dart';
 
@@ -27,8 +26,8 @@ class _ReceivedMailsListState extends State<ReceivedMailsList> {
     int numPages = await CITM.mailsPageCount(folder: 'Received');
 
     for (int i = 0; i < numPages; i++) {
-      String data = await CITM.fetch('missatges_llistat.php',
-          params: {"carpeta_actual": "0", "pag": "$i"});
+      String data =
+          await CITM.fetch('missatges_llistat.php', params: {"carpeta_actual": "0", "pag": "$i"});
 
       final html = parse(data);
 
@@ -51,12 +50,7 @@ class _ReceivedMailsListState extends State<ReceivedMailsList> {
 
       List<bool> mailUnreadCheckList = [];
       for (int j = 0; j < mailUnreadQuery.length; j++) {
-        if (mailUnreadQuery[j]
-                .attributes
-                .toString()
-                .split('.')[0]
-                .split('_')[1]
-                .trim() ==
+        if (mailUnreadQuery[j].attributes.toString().split('.')[0].split('_')[1].trim() ==
             'tancat') {
           mailUnreadCheckList.add(true);
         } else {
@@ -70,13 +64,10 @@ class _ReceivedMailsListState extends State<ReceivedMailsList> {
       }
 
       for (int i = 0; i < mailAuthorsList.length; i++) {
-        auxList.add(Mail(
-            mailUnreadCheckList[i],
-            mailAuthorsList[i],
-            mailSubjectList[i],
+        auxList.add(Mail(mailUnreadCheckList[i], mailAuthorsList[i], mailSubjectList[i],
             DateTime.parse('${mailDateList[i]} ${mailTimeList[i]}:00')));
       }
-      print(auxList.length);
+      debugPrint("${auxList.length}");
     }
 
     setState(() {
@@ -133,8 +124,7 @@ class _ReceivedMailsListState extends State<ReceivedMailsList> {
               Padding(
                 padding: const EdgeInsets.only(right: 20),
                 child: receivedMails[index].unread
-                    ? const Icon(Icons.mark_email_unread_rounded,
-                        color: Colors.blue)
+                    ? const Icon(Icons.mark_email_unread_rounded, color: Colors.blue)
                     : const Icon(
                         Icons.email_rounded,
                         color: Colors.grey,
@@ -151,27 +141,22 @@ class _ReceivedMailsListState extends State<ReceivedMailsList> {
                         receivedMails[index].time.minute >= 10
                             ? Text(
                                 '${receivedMails[index].time.day}/${receivedMails[index].time.month}/${receivedMails[index].time.year} - ${receivedMails[index].time.hour}:${receivedMails[index].time.minute}',
-                                style: TextStyle(
-                                    color: Colors.grey.shade600, fontSize: 12),
+                                style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
                               )
                             : Text(
                                 '${receivedMails[index].time.day}/${receivedMails[index].time.month}/${receivedMails[index].time.year} - ${receivedMails[index].time.hour}:0${receivedMails[index].time.minute}',
-                                style: TextStyle(
-                                    color: Colors.grey.shade600, fontSize: 12),
+                                style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
                               ),
                         Text(
                           receivedMails[index].author,
-                          style: TextStyle(
-                              color: Colors.grey.shade600, fontSize: 12),
+                          style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
                         ),
                       ],
                     ),
                     const SizedBox(height: 3),
                     Text(receivedMails[index].subject,
                         style: const TextStyle(
-                            fontSize: 14,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
+                            fontSize: 14, color: Colors.black, fontWeight: FontWeight.bold),
                         textAlign: TextAlign.left),
                   ],
                 ),

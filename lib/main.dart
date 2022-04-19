@@ -1,5 +1,6 @@
 import 'package:campus_app/citm.dart';
 import 'package:campus_app/env.dart';
+import 'package:campus_app/screens/mails_screen.dart';
 import 'package:campus_app/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -17,8 +18,8 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       //home: ScrapingTestScreen(),
-      //home: ReceivedMailsScreen(),
-      home: MainScreen(),
+      home: MailsScreen(),
+      // home: MainScreen(),
     );
   }
 }

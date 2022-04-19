@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:html/parser.dart';
 
 import '../citm.dart';
-import '../screens/mails_screen.dart';
 
 class ReceivedMailsList extends StatefulWidget {
   const ReceivedMailsList({
@@ -18,7 +17,7 @@ class _ReceivedMailsListState extends State<ReceivedMailsList> {
   bool _loaded = false;
 
   getDataReceivedMails() async {
-    String data = await CITM.fetch('missatges_llistat.php' , params: {"carpeta_actual": "0"});
+    String data = await CITM.fetch('missatges_llistat.php', params: {"carpeta_actual": "0"});
     final html = parse(data);
 
     receivedMails.clear(); //restart list
@@ -64,7 +63,7 @@ class _ReceivedMailsListState extends State<ReceivedMailsList> {
       }
       _loaded = true;
     });
-    print(receivedMails.length);
+    debugPrint("${receivedMails.length}");
   }
 
   @override
@@ -116,7 +115,8 @@ class _ReceivedMailsListState extends State<ReceivedMailsList> {
                           ),
                           const SizedBox(height: 3),
                           Text(receivedMails[index].subject,
-                              style: const TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.bold),
+                              style: const TextStyle(
+                                  fontSize: 14, color: Colors.black, fontWeight: FontWeight.bold),
                               textAlign: TextAlign.left),
                         ],
                       ),
