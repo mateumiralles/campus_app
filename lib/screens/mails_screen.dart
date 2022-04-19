@@ -47,7 +47,7 @@ class _MailsScreenState extends State<MailsScreen> {
           )
         ],
       ),
-      body: const ReceivedMailsList(),
+      body: _inbox ? const ReceivedMailsList() : const Center(child: Text('Pantalla de missatges enviats')) ,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(builder: (context) {
