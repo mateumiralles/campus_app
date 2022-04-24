@@ -95,7 +95,7 @@ class CITM {
     List<Mail> auxList = [];
 
     String data = await CITM.fetch('missatges_llistat.php', params: {
-      "carpeta_actual": "0",
+      "carpeta_actual": carpeta,
       "pag": "$pagina",
     });
     final html = parse(data);

@@ -1,4 +1,5 @@
-import 'package:campus_app/widgets/received_mails_list_2.dart';
+import 'package:campus_app/widgets/received_mails_list.dart';
+import 'package:campus_app/widgets/sent_mails_list.dart';
 import 'package:flutter/material.dart';
 
 class MailsScreen extends StatefulWidget {
@@ -47,7 +48,7 @@ class _MailsScreenState extends State<MailsScreen> {
           )
         ],
       ),
-      body: _inbox ? const ReceivedMailsList() : const Center(child: Text('Pantalla de missatges enviats')) ,
+      body: _inbox ? const ReceivedMailsList() : const SentMailsList() ,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(builder: (context) {
