@@ -1,4 +1,5 @@
 import 'package:campus_app/citm.dart';
+import 'package:campus_app/screens/mail_detail_screen.dart';
 import 'package:flutter/material.dart';
 
 class ReceivedMailsList extends StatefulWidget {
@@ -55,21 +56,16 @@ class _ReceivedMailsListState extends State<ReceivedMailsList> {
             onNotification: _onScrollNotification,
             child: ListView.separated(
               itemBuilder: (context, index) {
-                return Container(
-                  color: receivedMails[index].unread ? Colors.blue.shade50 : Colors.white,
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (context) {
-                        return Scaffold(
-                          appBar: AppBar(
-                            title: const Text('MISSATGE DETAIL!'),
-                          ),
-                          body:  Center(
-                              child: Text('INFORMACIO DEL MISSATGE ${receivedMails[index].id}!')),
-                        );
-                      }));
-                    },
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) =>
+                            MailDetailScreen(mail: receivedMails[index])));
+                  },
+                  child: Container(
+                    color: receivedMails[index].unread
+                        ? Colors.blue.shade50
+                        : Colors.white,
                     child: Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: Row(
