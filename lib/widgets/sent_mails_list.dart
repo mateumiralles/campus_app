@@ -1,5 +1,6 @@
 import 'package:campus_app/citm.dart';
 import 'package:flutter/material.dart';
+import 'package:campus_app/screens/mail_detail_screen.dart';
 
 class SentMailsList extends StatefulWidget {
   const SentMailsList({
@@ -55,7 +56,13 @@ class _SentMailsListState extends State<SentMailsList> {
             onNotification: _onScrollNotification,
             child: ListView.separated(
               itemBuilder: (context, index) {
-                return Container(
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) =>
+                            MailDetailScreen(mail: sentMails[index])));
+                  },
+                  child: Container(
                   color: index % 2 == 0 ? Colors.blue.shade50 : Colors.white,
                   child: Padding(
                     padding: const EdgeInsets.all(15.0),
@@ -114,7 +121,7 @@ class _SentMailsListState extends State<SentMailsList> {
                       ],
                     ),
                   ),
-                );
+                ),);
               },
               itemCount: sentMails.length,
               separatorBuilder: (context, index) {
