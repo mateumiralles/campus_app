@@ -163,11 +163,26 @@ class CITM {
     }
 
     for (int i = 0; i < mailAuthorsList.length; i++) {
-      debugPrint(mailIdList[i]);
       auxList.add(Mail(mailIdList[i], mailUnreadCheckList[i], mailAuthorsList[i],
           mailSubjectList[i], DateTime.parse('${mailDateList[i]} ${mailTimeList[i]}:00')));
     }
-    // print(auxList.length);
     return auxList;
   }
+static Future<List<String>> getMailText(String id) async {
+  List<String> mailTextList = [];
+    String data = await CITM.fetch('missatge.php', params: {
+      "id_mensaje": id,
+    });
+    final html = parse(data);
+
+    final mailTextQuery = html.querySelectorAll('.Arial11Black')[1].children;
+
+    for (int i = 0; i < mailTextQuery.length; i++) {
+      mailTextList.add(mailTextQuery[i].text);
+    }
+
+    return mailTextList;
+  }
+
+
 }

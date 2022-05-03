@@ -14,22 +14,8 @@ class _MailDetailScreenState extends State<MailDetailScreen> {
   List<String> mailTextList = [];
   bool _loaded = false;
 
-  getMailText(String id) async {
-    String data = await CITM.fetch('missatge.php', params: {
-      "id_mensaje": id,
-    });
-    final html = parse(data);
-
-    final mailTextQuery = html.querySelectorAll('.Arial11Black')[1].children;
-
-    for (int i = 0; i < mailTextQuery.length; i++) {
-      mailTextList.add(mailTextQuery[i].text);
-    }
-
-    for (int i = 0; i < mailTextList.length; i++) {
-      debugPrint(mailTextList[i]);
-    }
-    debugPrint('${mailTextList.length}');
+  getMailInfo() async {
+   mailTextList= await CITM.getMailText(widget.mail.id);
     setState(() {
       _loaded = true;
     });
@@ -38,7 +24,7 @@ class _MailDetailScreenState extends State<MailDetailScreen> {
   @override
   void initState() {
     super.initState();
-    getMailText(widget.mail.id);
+    getMailInfo();
   }
 
   @override
