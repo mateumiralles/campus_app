@@ -36,6 +36,27 @@ class Mail {
   );
 }
 
+/*
+
+postTest() async {
+    final uri = 'https://na57.salesforce.com/services/oauth2/token';
+    var requestBody = {
+      'grant_type':'password',
+      'client_id':'3MVG9dZJodJWITSviqdj3EnW.LrZ81MbuGBqgIxxxdD6u7Mru2NOEs8bHFoFyNw_nVKPhlF2EzDbNYI0rphQL',
+      'client_secret':'42E131F37E4E05313646E1ED1D3788D76192EBECA7486D15BDDB8408B9726B42',
+      'username':'example@mail.com.us',
+      'password':'ABC1234563Af88jesKxPLVirJRW8wXvj3D'
+    };
+
+    http.Response response = await http.post(
+        uri,
+        body: requestBody,
+    );
+
+    print(response.body);
+  }
+*/
+
 class CITM {
   static String? _sessionId, _username, _password;
 
@@ -49,8 +70,7 @@ class CITM {
       "username": _username,
       "password": _password,
     };
-    final response =
-        await http.post(loginUri, headers: formDataHeaders, body: credentials);
+    final response = await http.post(loginUri, headers: formDataHeaders, body: credentials);
     if (response.statusCode != 302) {
       // they use a redirect to the initial page (inici.php)
       throw "Couldn't login (status ${response.statusCode}).";
@@ -58,8 +78,7 @@ class CITM {
     _sessionId = extractSessionID(response.headers);
   }
 
-  static Future<String> fetch(String path,
-      {Map<String, dynamic>? params}) async {
+  static Future<String> fetch(String path, {Map<String, dynamic>? params}) async {
     if (_sessionId == null) {
       await login();
     }
@@ -81,8 +100,7 @@ class CITM {
   static Future<int> mailsPageCount({required String folder}) async {
     String numFolder = folder == 'Received' ? '0' : '1';
 
-    String data = await CITM
-        .fetch('missatges_llistat.php', params: {"carpeta_actual": numFolder});
+    String data = await CITM.fetch('missatges_llistat.php', params: {"carpeta_actual": numFolder});
 
     final html = parse(data);
 
@@ -106,7 +124,7 @@ class CITM {
 
     final mailInfoQuery = html.querySelectorAll(
         'html > body > table > tbody > tr > td > form > table > tbody > tr > td > table > tbody > tr > td.Arial10Black');
-        
+
     final mailUnreadQuery = html.querySelectorAll('[width="16"] img');
 
     final mailSubjectQuery = html.querySelectorAll('[rowspan="2"]');
@@ -125,13 +143,7 @@ class CITM {
 
     List<bool> mailUnreadCheckList = [];
     for (int j = 0; j < mailUnreadQuery.length; j++) {
-      if (mailUnreadQuery[j]
-              .attributes
-              .toString()
-              .split('.')[0]
-              .split('_')[1]
-              .trim() ==
-          'tancat') {
+      if (mailUnreadQuery[j].attributes.toString().split('.')[0].split('_')[1].trim() == 'tancat') {
         mailUnreadCheckList.add(true);
       } else {
         mailUnreadCheckList.add(false);
@@ -143,23 +155,17 @@ class CITM {
       mailSubjectList.add(mailSubjectQuery[i].text);
     }
 
-    
-
     List<String> mailIdList = [];
-    for (int i=0; i<mailIdQuery.length; i++) {
-      if(i==18 || ((i-18)%14==0 && i!=4)){
+    for (int i = 0; i < mailIdQuery.length; i++) {
+      if (i == 18 || ((i - 18) % 14 == 0 && i != 4)) {
         mailIdList.add(mailIdQuery[i].outerHtml.split('e=')[1].split('&')[0]);
       }
     }
 
     for (int i = 0; i < mailAuthorsList.length; i++) {
       debugPrint(mailIdList[i]);
-      auxList.add(Mail(
-          mailIdList[i],
-          mailUnreadCheckList[i],
-          mailAuthorsList[i],
-          mailSubjectList[i],
-          DateTime.parse('${mailDateList[i]} ${mailTimeList[i]}:00')));
+      auxList.add(Mail(mailIdList[i], mailUnreadCheckList[i], mailAuthorsList[i],
+          mailSubjectList[i], DateTime.parse('${mailDateList[i]} ${mailTimeList[i]}:00')));
     }
     // print(auxList.length);
     return auxList;
