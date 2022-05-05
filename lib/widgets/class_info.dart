@@ -22,6 +22,8 @@ class _ClassInfoState extends State<ClassInfo> {
 
     final html = parse(data);
 
+    //TODO: Comprovar si hi ha pròximes classes perquè sinó peta
+
     final classesTableQuery = html.querySelectorAll(
         'html > body > table > tbody > tr > td > table > tbody > tr > td > table > tbody > tr > td > table > tbody');
     if (classesTableQuery.isNotEmpty) {
