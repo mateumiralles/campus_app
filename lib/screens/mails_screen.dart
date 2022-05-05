@@ -1,3 +1,4 @@
+import 'package:campus_app/citm.dart';
 import 'package:campus_app/widgets/received_mails_list.dart';
 import 'package:campus_app/widgets/sent_mails_list.dart';
 import 'package:flutter/material.dart';
@@ -56,7 +57,12 @@ class _MailsScreenState extends State<MailsScreen> {
               appBar: AppBar(
                 title: const Text('NOU MISSATGE'),
               ),
-              body: const Center(child: Text('PANTALLA DE NOU MISSATGE!')),
+              body: Center(child: Column(
+                children: [
+                  const Text('PANTALLA DE NOU MISSATGE!'),
+                  ElevatedButton(onPressed: (){debugPrint('ete setx'); sendMsg();}, child: const Text('ENVIAR!'))
+                ],
+              )),
             );
           }));
         },
