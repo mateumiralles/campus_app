@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:campus_app/citm.dart';
-import 'package:html/parser.dart';
+import 'package:flutter/material.dart';
 
 class MailDetailScreen extends StatefulWidget {
   final Mail mail;

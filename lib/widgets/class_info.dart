@@ -22,18 +22,26 @@ class _ClassInfoState extends State<ClassInfo> {
 
     final html = parse(data);
 
-    //TODO: Comprovar si hi ha pròximes classes perquè sinó peta
+    //TODO: Comprovar si peta quan no hi ha classes properes
 
     final classesTableQuery = html.querySelectorAll(
         'html > body > table > tbody > tr > td > table > tbody > tr > td > table > tbody > tr > td > table > tbody');
-    if (classesTableQuery.isNotEmpty) {
+
+    final checkClassesQuery =
+        html.querySelectorAll(' .Arial11BlancBold')[0].innerHtml;
+
+    if (classesTableQuery.isNotEmpty &&
+        (checkClassesQuery == 'Pròximes classes' ||
+            checkClassesQuery == 'Próximas clases' ||
+            checkClassesQuery == 'Next session')) {
       final classesTableQuery0 = classesTableQuery[0];
       final classesNameQuery = html.querySelectorAll(
           'html > body > table > tbody > tr > td > table > tbody > tr > td > table > tbody > tr > td > table > tbody > tr > td.Arial11Black > a ');
 
       for (int i = 1; i < classesTableQuery0.nodes.length; i++) {
         if (classesTableQuery0.nodes[i].text.toString().trim() != "") {
-          classesInfoList.add(classesTableQuery0.nodes[i].text.toString().trim());
+          classesInfoList
+              .add(classesTableQuery0.nodes[i].text.toString().trim());
         }
       }
 
@@ -63,7 +71,8 @@ class _ClassInfoState extends State<ClassInfo> {
         //GET name
         String className = classesNameQuery[j].text.toString();
 
-        closeClasses.add(NextClass(DateTime.parse('$year-$month-$day $time:00'), teacherName, className, classroom));
+        closeClasses.add(NextClass(DateTime.parse('$year-$month-$day $time:00'),
+            teacherName, className, classroom));
       }
       debugPrint('NumClasses: ${closeClasses.length}');
     }
@@ -83,7 +92,9 @@ class _ClassInfoState extends State<ClassInfo> {
     return Expanded(
       flex: 2,
       child: Container(
-        decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(25))),
+        decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(Radius.circular(25))),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -101,7 +112,9 @@ class _ClassInfoState extends State<ClassInfo> {
               height: 70,
               decoration: const BoxDecoration(
                 color: Colors.blue,
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(25), topRight: Radius.circular(25)),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(25),
+                    topRight: Radius.circular(25)),
               ),
             ),
             Expanded(
@@ -111,30 +124,40 @@ class _ClassInfoState extends State<ClassInfo> {
                         return ListTile(
                           title: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                  '${closeClasses[index].time.day}/${closeClasses[index].time.month}/${closeClasses[index].time.year} - ${closeClasses[index].time.hour}:${closeClasses[index].time.minute == 0 ? '00' : closeClasses[index].time.minute}',
-                                  style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
-                              const SizedBox(
-                                height: 3,
-                              ),
-                              Text(closeClasses[index].name, style: const TextStyle(fontSize: 15)),
-                            ],
+                            children: closeClasses.isNotEmpty
+                                ? [
+                                    Text(
+                                        '${closeClasses[index].time.day}/${closeClasses[index].time.month}/${closeClasses[index].time.year} - ${closeClasses[index].time.hour}:${closeClasses[index].time.minute == 0 ? '00' : closeClasses[index].time.minute}',
+                                        style: const TextStyle(
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.bold)),
+                                    const SizedBox(
+                                      height: 3,
+                                    ),
+                                    Text(closeClasses[index].name,
+                                        style: const TextStyle(fontSize: 15)),
+                                  ]
+                                : [const Text('NO HI HAN PROPERES CLASSES')],
                           ),
                           subtitle: closeClasses[index].classroom.length <= 15
                               ? Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(closeClasses[index].teacher, style: const TextStyle(fontSize: 13)),
-                                    Text(closeClasses[index].classroom, style: const TextStyle(fontSize: 13)),
+                                    Text(closeClasses[index].teacher,
+                                        style: const TextStyle(fontSize: 13)),
+                                    Text(closeClasses[index].classroom,
+                                        style: const TextStyle(fontSize: 13)),
                                   ],
                                 )
                               : Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(closeClasses[index].teacher, style: const TextStyle(fontSize: 13)),
+                                    Text(closeClasses[index].teacher,
+                                        style: const TextStyle(fontSize: 13)),
                                     Text(closeClasses[index].classroom,
-                                        textAlign: TextAlign.end, style: const TextStyle(fontSize: 13)),
+                                        textAlign: TextAlign.end,
+                                        style: const TextStyle(fontSize: 13)),
                                   ],
                                 ),
                         );
