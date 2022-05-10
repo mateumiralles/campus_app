@@ -18,8 +18,8 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       //home: ScrapingTestScreen(),
-      //home: MailsScreen(),
-       home: MainScreen(),
+      home: MailsScreen(),
+      // home: MainScreen(),
     );
   }
 }

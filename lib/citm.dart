@@ -77,8 +77,11 @@ sendMsg() async {
     headers: {},
     body: msgParameters,
   );
-
-  debugPrint('${response.body}');
+  if (response.statusCode == 201) {
+    debugPrint('Missatge Enivat!');
+  } else {
+    debugPrint("El missatge no s'ha enviat");
+  }
 }
 
 class CITM {
