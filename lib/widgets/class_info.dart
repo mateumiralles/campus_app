@@ -119,51 +119,53 @@ class _ClassInfoState extends State<ClassInfo> {
             ),
             Expanded(
               child: loaded
-                  ? ListView.builder(
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          title: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: closeClasses.isNotEmpty
-                                ? [
-                                    Text(
-                                        '${closeClasses[index].time.day}/${closeClasses[index].time.month}/${closeClasses[index].time.year} - ${closeClasses[index].time.hour}:${closeClasses[index].time.minute == 0 ? '00' : closeClasses[index].time.minute}',
-                                        style: const TextStyle(
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.bold)),
-                                    const SizedBox(
-                                      height: 3,
-                                    ),
-                                    Text(closeClasses[index].name,
-                                        style: const TextStyle(fontSize: 15)),
-                                  ]
-                                : [const Text('NO HI HAN PROPERES CLASSES')],
-                          ),
-                          subtitle: closeClasses[index].classroom.length <= 15
-                              ? Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(closeClasses[index].teacher,
-                                        style: const TextStyle(fontSize: 13)),
-                                    Text(closeClasses[index].classroom,
-                                        style: const TextStyle(fontSize: 13)),
-                                  ],
-                                )
-                              : Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(closeClasses[index].teacher,
-                                        style: const TextStyle(fontSize: 13)),
-                                    Text(closeClasses[index].classroom,
-                                        textAlign: TextAlign.end,
-                                        style: const TextStyle(fontSize: 13)),
-                                  ],
-                                ),
-                        );
-                      },
-                      itemCount: closeClasses.length,
-                    )
+                  ? Container(
+                    child: closeClasses.isNotEmpty ? ListView.builder(
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            title: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: 
+                                  [
+                                      Text(
+                                          '${closeClasses[index].time.day}/${closeClasses[index].time.month}/${closeClasses[index].time.year} - ${closeClasses[index].time.hour}:${closeClasses[index].time.minute == 0 ? '00' : closeClasses[index].time.minute}',
+                                          style: const TextStyle(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.bold)),
+                                      const SizedBox(
+                                        height: 3,
+                                      ),
+                                      Text(closeClasses[index].name,
+                                          style: const TextStyle(fontSize: 15)),
+                                    ]
+                                  
+                            ),
+                            subtitle: closeClasses[index].classroom.length <= 15
+                                ? Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(closeClasses[index].teacher,
+                                          style: const TextStyle(fontSize: 13)),
+                                      Text(closeClasses[index].classroom,
+                                          style: const TextStyle(fontSize: 13)),
+                                    ],
+                                  )
+                                : Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(closeClasses[index].teacher,
+                                          style: const TextStyle(fontSize: 13)),
+                                      Text(closeClasses[index].classroom,
+                                          textAlign: TextAlign.end,
+                                          style: const TextStyle(fontSize: 13)),
+                                    ],
+                                  ),
+                          );
+                        },
+                        itemCount: closeClasses.length,
+                      ) :  const Center(child: Text('NO HI HAN PROPERES CLASSES!')),
+                  )
                   : const Center(child: CircularProgressIndicator()),
             ),
           ],
