@@ -57,7 +57,6 @@ postTest() async {
   }
 */
 
-
 class CITM {
   static String? _sessionId, _username, _password;
 
@@ -71,17 +70,15 @@ class CITM {
       "username": _username,
       "password": _password,
     };
-    final response =
-        await http.post(loginUri, headers: formDataHeaders, body: credentials);
+    final response = await http.post(loginUri, headers: formDataHeaders, body: credentials);
     if (response.statusCode != 302) {
       // they use a redirect to the initial page (inici.php)
       throw "Couldn't login (status ${response.statusCode}).";
     }
     _sessionId = extractSessionID(response.headers);
   }
-  
-  static Future<String> fetch(String path,
-      {Map<String, dynamic>? params}) async {
+
+  static Future<String> fetch(String path, {Map<String, dynamic>? params}) async {
     if (_sessionId == null) {
       await login();
     }
@@ -103,8 +100,7 @@ class CITM {
   static Future<int> mailsPageCount({required String folder}) async {
     String numFolder = folder == 'Received' ? '0' : '1';
 
-    String data = await CITM
-        .fetch('missatges_llistat.php', params: {"carpeta_actual": numFolder});
+    String data = await CITM.fetch('missatges_llistat.php', params: {"carpeta_actual": numFolder});
 
     final html = parse(data);
 
@@ -147,13 +143,7 @@ class CITM {
 
     List<bool> mailUnreadCheckList = [];
     for (int j = 0; j < mailUnreadQuery.length; j++) {
-      if (mailUnreadQuery[j]
-              .attributes
-              .toString()
-              .split('.')[0]
-              .split('_')[1]
-              .trim() ==
-          'tancat') {
+      if (mailUnreadQuery[j].attributes.toString().split('.')[0].split('_')[1].trim() == 'tancat') {
         mailUnreadCheckList.add(true);
       } else {
         mailUnreadCheckList.add(false);
@@ -173,12 +163,8 @@ class CITM {
     }
 
     for (int i = 0; i < mailAuthorsList.length; i++) {
-      auxList.add(Mail(
-          mailIdList[i],
-          mailUnreadCheckList[i],
-          mailAuthorsList[i],
-          mailSubjectList[i],
-          DateTime.parse('${mailDateList[i]} ${mailTimeList[i]}:00')));
+      auxList.add(Mail(mailIdList[i], mailUnreadCheckList[i], mailAuthorsList[i],
+          mailSubjectList[i], DateTime.parse('${mailDateList[i]} ${mailTimeList[i]}:00')));
     }
     return auxList;
   }
@@ -200,35 +186,37 @@ class CITM {
   }
 
   static Future<void> sendMsg() async {
-  final uri = Uri.parse('https://citm.fundacioupc.com/missatges_envia.php');
-  var msgParameters = {
-    'norefrescar': '',
-    'accion': 'normal',
-    'prioridad': '1',
-    'para_logins': 'mateums',
-    'para': '',
-    'campus_selec': '',
-    'id_origen': '',
-    'usuario_origen': '',
-    'titolmissatge': 'Assumpte del msg',
-    'textmissatge': '',
-  };
+    final uri = Uri.parse('https://citm.fundacioupc.com/missatges_envia.php');
+    var msgParameters = {
+      'norefrescar': '',
+      'accion': 'normal',
+      'prioridad': '1',
+      'para_logins': 'mateums',
+      'para': '',
+      'campus_selec': '',
+      'id_origen': '',
+      'usuario_origen': '',
+      'titolmissatge': 'Assumpte del msg',
+      'textmissatge': 'bubu bibi',
+    };
 
-  debugPrint('$msgParameters');
-  http.Response response = await http.post(
-    uri,
-    headers: {},
-    body: msgParameters,
-  );
-  if (response.statusCode == 201) {
-    debugPrint('Missatge Enivat!');
-  } else {
-    debugPrint("El missatge no s'ha enviat");
+    debugPrint('$msgParameters');
+    http.Response response = await http.post(
+      uri,
+      headers: {
+        "Cookie": "PHPSESSID=$_sessionId",
+      },
+      body: msgParameters,
+    );
+    if (response.statusCode == 201) {
+      debugPrint('Missatge Enivat!');
+    } else {
+      debugPrint("El missatge no s'ha enviat");
+    }
   }
-}
 
-static Future<List<String>> getMailUsers() async {
-    List<String>usersList = [];
+  static Future<List<String>> getMailUsers() async {
+    List<String> usersList = [];
     String data = await CITM.fetch('directori.php', params: {});
     final html = parse(data);
 
