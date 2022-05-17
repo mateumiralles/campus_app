@@ -60,7 +60,7 @@ class _MailsScreenState extends State<MailsScreen> {
               body: Center(child: Column(
                 children: [
                   const Text('PANTALLA DE NOU MISSATGE!'),
-                  ElevatedButton(onPressed: (){debugPrint('Enviar msg!'); sendMsg();}, child: const Text('ENVIAR!'))
+                  ElevatedButton(onPressed: (){debugPrint('Enviar msg!'); CITM.sendMsg();}, child: const Text('ENVIAR!'))
                 ],
               )),
             );

@@ -56,33 +56,7 @@ postTest() async {
     print(response.body);
   }
 */
-sendMsg() async {
-  final uri = Uri.parse('https://citm.fundacioupc.com/missatges_envia.php');
-  var msgParameters = {
-    'norefrescar': '',
-    'accion': 'normal',
-    'prioridad': '1',
-    'para_logins': 'mateums',
-    'para': '',
-    'campus_selec': '',
-    'id_origen': '',
-    'usuario_origen': '',
-    'titolmissatge': 'Assumpte del msg',
-    'textmissatge': '',
-  };
 
-  debugPrint('$msgParameters');
-  http.Response response = await http.post(
-    uri,
-    headers: {},
-    body: msgParameters,
-  );
-  if (response.statusCode == 201) {
-    debugPrint('Missatge Enivat!');
-  } else {
-    debugPrint("El missatge no s'ha enviat");
-  }
-}
 
 class CITM {
   static String? _sessionId, _username, _password;
@@ -105,7 +79,7 @@ class CITM {
     }
     _sessionId = extractSessionID(response.headers);
   }
-
+  
   static Future<String> fetch(String path,
       {Map<String, dynamic>? params}) async {
     if (_sessionId == null) {
@@ -223,5 +197,48 @@ class CITM {
     }
 
     return mailTextList;
+  }
+
+  static Future<void> sendMsg() async {
+  final uri = Uri.parse('https://citm.fundacioupc.com/missatges_envia.php');
+  var msgParameters = {
+    'norefrescar': '',
+    'accion': 'normal',
+    'prioridad': '1',
+    'para_logins': 'mateums',
+    'para': '',
+    'campus_selec': '',
+    'id_origen': '',
+    'usuario_origen': '',
+    'titolmissatge': 'Assumpte del msg',
+    'textmissatge': '',
+  };
+
+  debugPrint('$msgParameters');
+  http.Response response = await http.post(
+    uri,
+    headers: {},
+    body: msgParameters,
+  );
+  if (response.statusCode == 201) {
+    debugPrint('Missatge Enivat!');
+  } else {
+    debugPrint("El missatge no s'ha enviat");
+  }
+}
+
+static Future<List<String>> getMailUsers() async {
+    List<String>usersList = [];
+    String data = await CITM.fetch('directori.php', params: {});
+    final html = parse(data);
+
+    final usersTextQuery = html.querySelector('#cinta100')!.querySelectorAll('.Arial11Black');
+
+    for (int i = 0; i < usersTextQuery.length; i++) {
+      debugPrint(usersTextQuery[i].text);
+      usersList.add(usersTextQuery[i].text);
+    }
+
+    return usersList;
   }
 }
