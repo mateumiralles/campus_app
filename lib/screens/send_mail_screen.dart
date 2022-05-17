@@ -3,6 +3,8 @@ import 'package:campus_app/screens/mail_users_screen.dart';
 
 import 'package:flutter/material.dart';
 
+import '../widgets/mail_form.dart';
+
 class SendMailScreen extends StatelessWidget {
   const SendMailScreen({
     Key? key,
@@ -14,27 +16,10 @@ class SendMailScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('NOU MISSATGE'),
       ),
-      body: Center(
-          child: Column(
-        children: [
-          const Text('PANTALLA DE NOU MISSATGE!'),
-          ElevatedButton(
-              onPressed: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) {
-                  return const MailUsersScreen();
-                }));
-                CITM.getMailUsers();
-              },
-              child: const Text('DESTINATARIS!')),
-          ElevatedButton(
-              onPressed: () {
-                debugPrint('Enviar msg!');
-                CITM.sendMsg();
-              },
-              child: const Text('ENVIAR!'))
-        ],
-      )),
+      body: const Center(
+          child: 
+          MailForm(),
+        ),
     );
   }
 }

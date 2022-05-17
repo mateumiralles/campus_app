@@ -185,19 +185,19 @@ class CITM {
     return mailTextList;
   }
 
-  static Future<void> sendMsg() async {
+  static Future<void> sendMsg({required String destinataris, required String assumpte, String text=''}) async {
     final uri = Uri.parse('https://citm.fundacioupc.com/missatges_envia.php');
     var msgParameters = {
       'norefrescar': '',
       'accion': 'normal',
       'prioridad': '1',
-      'para_logins': 'mateums',
+      'para_logins': destinataris,
       'para': '',
       'campus_selec': '',
       'id_origen': '',
       'usuario_origen': '',
-      'titolmissatge': 'Assumpte del msg',
-      'textmissatge': 'bubu bibi',
+      'titolmissatge': assumpte,
+      'textmissatge': '<p>$text<p>',
     };
 
     debugPrint('$msgParameters');
