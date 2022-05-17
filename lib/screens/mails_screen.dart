@@ -1,4 +1,4 @@
-import 'package:campus_app/citm.dart';
+import 'package:campus_app/screens/send_mail_screen.dart';
 import 'package:campus_app/widgets/received_mails_list.dart';
 import 'package:campus_app/widgets/sent_mails_list.dart';
 import 'package:flutter/material.dart';
@@ -53,17 +53,7 @@ class _MailsScreenState extends State<MailsScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-            return Scaffold(
-              appBar: AppBar(
-                title: const Text('NOU MISSATGE'),
-              ),
-              body: Center(child: Column(
-                children: [
-                  const Text('PANTALLA DE NOU MISSATGE!'),
-                  ElevatedButton(onPressed: (){debugPrint('Enviar msg!'); CITM.sendMsg();}, child: const Text('ENVIAR!'))
-                ],
-              )),
-            );
+            return const SendMailScreen();
           }));
         },
         backgroundColor: Colors.blue,
@@ -75,3 +65,5 @@ class _MailsScreenState extends State<MailsScreen> {
     );
   }
 }
+
+
