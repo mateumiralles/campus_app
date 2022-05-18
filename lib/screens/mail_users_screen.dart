@@ -62,7 +62,7 @@ class _MailUsersScreenState extends State<MailUsersScreen> {
             TextField(
               onChanged: (value) => filter(value),
               decoration: const InputDecoration(
-                  labelText: 'Cerca', suffixIcon: Icon(Icons.search)),
+                  labelText: 'Cerca i afegeix un usuari automàticament', suffixIcon: Icon(Icons.search)),
             ),
             const SizedBox(
               height: 20,
