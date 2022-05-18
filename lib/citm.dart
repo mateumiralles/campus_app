@@ -78,6 +78,70 @@ class CITM {
     return response.body.toString();
   }
 
+  static Future<List<NextClass>> getCloseClasses() async {
+    List<NextClass> closeClasses = [];
+    List<String> classesInfoList = [];
+
+    String data = await CITM.fetch('/inici.php');
+
+    final html = parse(data);
+
+    final classesTableQuery = html.querySelectorAll(
+        'html > body > table > tbody > tr > td > table > tbody > tr > td > table > tbody > tr > td > table > tbody');
+
+    final checkClassesQuery =
+        html.querySelectorAll(' .Arial11BlancBold')[0].innerHtml;
+
+    if (classesTableQuery.isNotEmpty &&
+        (checkClassesQuery == 'Pròximes classes' ||
+            checkClassesQuery == 'Próximas clases' ||
+            checkClassesQuery == 'Next session')) {
+      final classesTableQuery0 = classesTableQuery[0];
+      final classesNameQuery = html.querySelectorAll(
+          'html > body > table > tbody > tr > td > table > tbody > tr > td > table > tbody > tr > td > table > tbody > tr > td.Arial11Black > a ');
+
+      for (int i = 1; i < classesTableQuery0.nodes.length; i++) {
+        if (classesTableQuery0.nodes[i].text.toString().trim() != "") {
+          classesInfoList
+              .add(classesTableQuery0.nodes[i].text.toString().trim());
+        }
+      }
+
+      for (int j = 0; j < classesInfoList.length; j++) {
+        List<String> splitAux = classesInfoList[j].split('(');
+
+        //GET dateTime
+        String dateTime = classesInfoList[j].substring(0, 16);
+
+        //Parse dateTime
+        String date, time;
+        date = dateTime.split(' ')[0].trim();
+        time = dateTime.split(' ')[1].trim();
+
+        String year, month, day;
+
+        year = date.split('-')[2].trim();
+        month = date.split('-')[1].trim();
+        day = date.split('-')[0].trim();
+
+        //GET teacher
+        String teacherName = splitAux[1].split(')')[0].toString();
+
+        //GET classroom
+        String classroom = splitAux[1].split(')')[1].toString().trim();
+
+        //GET name
+        String className = classesNameQuery[j].text.toString();
+
+        closeClasses.add(NextClass(DateTime.parse('$year-$month-$day $time:00'),
+            teacherName, className, classroom));
+      }
+      debugPrint('NumClasses: ${closeClasses.length}');
+    }
+
+    return closeClasses;
+  }
+
   static Future<int> mailsPageCount({required String folder}) async {
     String numFolder = folder == 'Received' ? '0' : '1';
 
@@ -233,18 +297,32 @@ class CITM {
             .substring(0, usersTextQuery[i].text.length - 1));
       }
     }
-    
+
     //Eliminar repetits
     auxList = scrappedUsersList.toSet().toList();
 
     //Primer reordenem el nom i treiem la ',' després posem el username a partir del '('
     for (int i = 0; i < auxList.length; i++) {
-      finalUserList.add(CitmUser(auxList[i].split('(')[0].split(', ')[1]+auxList[i].split('(')[0].split(', ')[0],
+      finalUserList.add(CitmUser(
+          auxList[i].split('(')[0].split(', ')[1] +
+              auxList[i].split('(')[0].split(', ')[0],
           auxList[i].split('(')[1]));
     }
 
     return finalUserList;
   }
+}
+
+class NextClass {
+  DateTime time;
+  String teacher, name, classroom;
+
+  NextClass(
+    this.time,
+    this.teacher,
+    this.name,
+    this.classroom,
+  );
 }
 
 class CitmUser {
