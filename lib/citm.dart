@@ -226,6 +226,7 @@ class CITM {
         html.querySelector('#cinta100')!.querySelectorAll('.Arial11Black');
 
     for (int i = 0; i < usersTextQuery.length; i++) {
+      //filtrar tots els noms i treure parentesis final
       if (usersTextQuery[i].text.contains(',')) {
         scrappedUsersList.add(usersTextQuery[i]
             .text
@@ -233,16 +234,13 @@ class CITM {
       }
     }
     
+    //Eliminar repetits
     auxList = scrappedUsersList.toSet().toList();
 
+    //Primer reordenem el nom i treiem la ',' després posem el username a partir del '('
     for (int i = 0; i < auxList.length; i++) {
-      finalUserList.add(CitmUser(scrappedUsersList[i].split('(')[0],
-          scrappedUsersList[i].split('(')[1]));
-    }
-
-    for (int i = 0; i < finalUserList.length; i++) {
-      debugPrint(
-          '$i Nom: ${finalUserList[i].fullname} / User: ${finalUserList[i].username}');
+      finalUserList.add(CitmUser(auxList[i].split('(')[0].split(', ')[1]+auxList[i].split('(')[0].split(', ')[0],
+          auxList[i].split('(')[1]));
     }
 
     return finalUserList;
