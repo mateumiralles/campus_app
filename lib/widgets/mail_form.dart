@@ -20,7 +20,6 @@ class MailFormState extends State<MailForm> {
 
   @override
   void dispose() {
-    // Clean up the controller when the widget is disposed.
     destinatarisController.dispose();
     assumpteController.dispose();
     textMessageController.dispose();
@@ -141,10 +140,8 @@ class MailFormState extends State<MailForm> {
               child: ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Missatge Enviat!')),
-                    );
-                    CITM.sendMsg(destinataris: destinatarisController.text, assumpte: assumpteController.text, text: textMessageController.text);
+                    
+                    CITM.sendMsg(destinataris: destinatarisController.text, assumpte: assumpteController.text, text: textMessageController.text, context: context);
                   }
                 },
                 child: const Text('Enviar'),

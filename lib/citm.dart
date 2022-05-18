@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
 
@@ -36,27 +36,6 @@ class Mail {
   );
 }
 
-/*
-
-postTest() async {
-    final uri = 'https://na57.salesforce.com/services/oauth2/token';
-    var requestBody = {
-      'grant_type':'password',
-      'client_id':'3MVG9dZJodJWITSviqdj3EnW.LrZ81MbuGBqgIxxxdD6u7Mru2NOEs8bHFoFyNw_nVKPhlF2EzDbNYI0rphQL',
-      'client_secret':'42E131F37E4E05313646E1ED1D3788D76192EBECA7486D15BDDB8408B9726B42',
-      'username':'example@mail.com.us',
-      'password':'ABC1234563Af88jesKxPLVirJRW8wXvj3D'
-    };
-
-    http.Response response = await http.post(
-        uri,
-        body: requestBody,
-    );
-
-    print(response.body);
-  }
-*/
-
 class CITM {
   static String? _sessionId, _username, _password;
 
@@ -70,7 +49,8 @@ class CITM {
       "username": _username,
       "password": _password,
     };
-    final response = await http.post(loginUri, headers: formDataHeaders, body: credentials);
+    final response =
+        await http.post(loginUri, headers: formDataHeaders, body: credentials);
     if (response.statusCode != 302) {
       // they use a redirect to the initial page (inici.php)
       throw "Couldn't login (status ${response.statusCode}).";
@@ -78,7 +58,8 @@ class CITM {
     _sessionId = extractSessionID(response.headers);
   }
 
-  static Future<String> fetch(String path, {Map<String, dynamic>? params}) async {
+  static Future<String> fetch(String path,
+      {Map<String, dynamic>? params}) async {
     if (_sessionId == null) {
       await login();
     }
@@ -100,7 +81,8 @@ class CITM {
   static Future<int> mailsPageCount({required String folder}) async {
     String numFolder = folder == 'Received' ? '0' : '1';
 
-    String data = await CITM.fetch('missatges_llistat.php', params: {"carpeta_actual": numFolder});
+    String data = await CITM
+        .fetch('missatges_llistat.php', params: {"carpeta_actual": numFolder});
 
     final html = parse(data);
 
@@ -143,7 +125,13 @@ class CITM {
 
     List<bool> mailUnreadCheckList = [];
     for (int j = 0; j < mailUnreadQuery.length; j++) {
-      if (mailUnreadQuery[j].attributes.toString().split('.')[0].split('_')[1].trim() == 'tancat') {
+      if (mailUnreadQuery[j]
+              .attributes
+              .toString()
+              .split('.')[0]
+              .split('_')[1]
+              .trim() ==
+          'tancat') {
         mailUnreadCheckList.add(true);
       } else {
         mailUnreadCheckList.add(false);
@@ -163,8 +151,12 @@ class CITM {
     }
 
     for (int i = 0; i < mailAuthorsList.length; i++) {
-      auxList.add(Mail(mailIdList[i], mailUnreadCheckList[i], mailAuthorsList[i],
-          mailSubjectList[i], DateTime.parse('${mailDateList[i]} ${mailTimeList[i]}:00')));
+      auxList.add(Mail(
+          mailIdList[i],
+          mailUnreadCheckList[i],
+          mailAuthorsList[i],
+          mailSubjectList[i],
+          DateTime.parse('${mailDateList[i]} ${mailTimeList[i]}:00')));
     }
     return auxList;
   }
@@ -185,7 +177,11 @@ class CITM {
     return mailTextList;
   }
 
-  static Future<void> sendMsg({required String destinataris, required String assumpte, String text=''}) async {
+  static Future<void> sendMsg(
+      {required String destinataris,
+      required String assumpte,
+      String text = '',
+      context}) async {
     final uri = Uri.parse('https://citm.fundacioupc.com/missatges_envia.php');
     var msgParameters = {
       'norefrescar': '',
@@ -208,10 +204,14 @@ class CITM {
       },
       body: msgParameters,
     );
-    if (response.statusCode == 201) {
-      debugPrint('Missatge Enivat!');
+    if (response.statusCode == 200) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Missatge enviat correctament!')),
+      );
     } else {
-      debugPrint("El missatge no s'ha enviat");
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("El missatge no s'ha pogut enviar!")),
+      );
     }
   }
 
@@ -220,7 +220,8 @@ class CITM {
     String data = await CITM.fetch('directori.php', params: {});
     final html = parse(data);
 
-    final usersTextQuery = html.querySelector('#cinta100')!.querySelectorAll('.Arial11Black');
+    final usersTextQuery =
+        html.querySelector('#cinta100')!.querySelectorAll('.Arial11Black');
 
     for (int i = 0; i < usersTextQuery.length; i++) {
       debugPrint(usersTextQuery[i].text);
