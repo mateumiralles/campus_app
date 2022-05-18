@@ -16,14 +16,16 @@ class _MailUsersScreenState extends State<MailUsersScreen> {
 
   getDataUsers() async {
     usersList = await CITM.getCitmUsers();
+    searchUsersList = usersList;
+    setState(() {
+      _loaded = true;
+    });
   }
 
   @override
   void initState() {
     super.initState();
     getDataUsers();
-    searchUsersList = usersList;
-    _loaded = true;
   }
 
   void filter(String enteredKeyword) {
