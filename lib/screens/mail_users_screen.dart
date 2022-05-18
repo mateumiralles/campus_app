@@ -73,16 +73,25 @@ class _MailUsersScreenState extends State<MailUsersScreen> {
                       ? Scrollbar(
                           child: ListView.builder(
                             itemCount: searchUsersList.length,
-                            itemBuilder: (context, index) => Card(
-                              color: Colors.blue[100],
-                              elevation: 4,
-                              margin: const EdgeInsets.symmetric(vertical: 10),
-                              child: ListTile(
-                                title: Text(
-                                  searchUsersList[index].fullname,
-                                ),
-                                subtitle: Text(
-                                  searchUsersList[index].username,
+                            itemBuilder: (context, index) => GestureDetector(
+                              onTap: () {
+                                Navigator.pop(
+                                  context,
+                                  '${searchUsersList[index].username};',
+                                );
+                              },
+                              child: Card(
+                                color: Colors.blue[100],
+                                elevation: 4,
+                                margin:
+                                    const EdgeInsets.symmetric(vertical: 10),
+                                child: ListTile(
+                                  title: Text(
+                                    searchUsersList[index].fullname,
+                                  ),
+                                  subtitle: Text(
+                                    searchUsersList[index].username,
+                                  ),
                                 ),
                               ),
                             ),

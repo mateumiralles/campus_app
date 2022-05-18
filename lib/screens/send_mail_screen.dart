@@ -1,9 +1,5 @@
-import 'package:campus_app/citm.dart';
-import 'package:campus_app/screens/mail_users_screen.dart';
-
+import 'package:campus_app/widgets/mail_form.dart';
 import 'package:flutter/material.dart';
-
-import '../widgets/mail_form.dart';
 
 class SendMailScreen extends StatelessWidget {
   const SendMailScreen({

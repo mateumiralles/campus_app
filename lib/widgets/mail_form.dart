@@ -14,7 +14,7 @@ class MailForm extends StatefulWidget {
 class MailFormState extends State<MailForm> {
   final _formKey = GlobalKey<FormState>();
 
-  final destinatarisController = TextEditingController();
+  var destinatarisController = TextEditingController();
   final assumpteController = TextEditingController();
   final textMessageController = TextEditingController();
 
@@ -28,7 +28,7 @@ class MailFormState extends State<MailForm> {
 
   @override
   Widget build(BuildContext context) {
-    return  Form(
+    return Form(
       key: _formKey,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -64,11 +64,15 @@ class MailFormState extends State<MailForm> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {
-                      Navigator.of(context)
+                    onTap: () async {
+                      String newDestinatari = await Navigator.of(context)
                           .push(MaterialPageRoute(builder: (context) {
                         return const MailUsersScreen();
-                      }));
+                      })) ?? '';
+                      setState(() {
+                        destinatarisController.text =
+                            destinatarisController.text + newDestinatari;
+                      });
                     },
                     child: Container(
                         margin: const EdgeInsets.only(left: 20.0),
@@ -117,7 +121,7 @@ class MailFormState extends State<MailForm> {
               padding: const EdgeInsets.only(top: 10),
               child: TextFormField(
                 controller: textMessageController,
-               maxLines: 10,
+                maxLines: 10,
                 decoration: InputDecoration(
                     labelStyle: const TextStyle(fontSize: 16),
                     labelText: "Escriu el missatge!",
@@ -131,7 +135,6 @@ class MailFormState extends State<MailForm> {
                           const BorderSide(width: 2, color: Colors.blue),
                       borderRadius: BorderRadius.circular(15),
                     )),
-             
               ),
             ),
             Padding(
@@ -139,8 +142,11 @@ class MailFormState extends State<MailForm> {
               child: ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    
-                    CITM.sendMsg(destinataris: destinatarisController.text, assumpte: assumpteController.text, text: textMessageController.text, context: context);
+                    CITM.sendMsg(
+                        destinataris: destinatarisController.text,
+                        assumpte: assumpteController.text,
+                        text: textMessageController.text,
+                        context: context);
                   }
                 },
                 child: const Text('Enviar'),
