@@ -215,8 +215,10 @@ class CITM {
     }
   }
 
-  static Future<List<String>> getMailUsers() async {
-    List<String> usersList = [];
+  static Future<List<CitmUser>> getCitmUsers() async {
+    List<String> scrappedUsersList = [];
+    List<String> auxList = [];
+    List<CitmUser> finalUserList = [];
     String data = await CITM.fetch('directori.php', params: {});
     final html = parse(data);
 
@@ -224,10 +226,30 @@ class CITM {
         html.querySelector('#cinta100')!.querySelectorAll('.Arial11Black');
 
     for (int i = 0; i < usersTextQuery.length; i++) {
-      debugPrint(usersTextQuery[i].text);
-      usersList.add(usersTextQuery[i].text);
+      if (usersTextQuery[i].text.contains(',')) {
+        scrappedUsersList.add(usersTextQuery[i]
+            .text
+            .substring(0, usersTextQuery[i].text.length - 1));
+      }
+    }
+    
+    auxList = scrappedUsersList.toSet().toList();
+
+    for (int i = 0; i < auxList.length; i++) {
+      finalUserList.add(CitmUser(scrappedUsersList[i].split('(')[0],
+          scrappedUsersList[i].split('(')[1]));
     }
 
-    return usersList;
+    for (int i = 0; i < finalUserList.length; i++) {
+      debugPrint(
+          '$i Nom: ${finalUserList[i].fullname} / User: ${finalUserList[i].username}');
+    }
+
+    return finalUserList;
   }
+}
+
+class CitmUser {
+  String fullname, username;
+  CitmUser(this.fullname, this.username);
 }

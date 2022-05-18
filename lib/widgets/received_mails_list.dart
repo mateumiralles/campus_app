@@ -3,9 +3,7 @@ import 'package:campus_app/screens/mail_detail_screen.dart';
 import 'package:flutter/material.dart';
 
 class ReceivedMailsList extends StatefulWidget {
-  const ReceivedMailsList({
-    Key? key,
-  }) : super(key: key);
+  const ReceivedMailsList({Key? key}) : super(key: key);
 
   @override
   State<ReceivedMailsList> createState() => _ReceivedMailsListState();

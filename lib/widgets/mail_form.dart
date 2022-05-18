@@ -69,7 +69,6 @@ class MailFormState extends State<MailForm> {
                           .push(MaterialPageRoute(builder: (context) {
                         return const MailUsersScreen();
                       }));
-                      CITM.getMailUsers();
                     },
                     child: Container(
                         margin: const EdgeInsets.only(left: 20.0),
