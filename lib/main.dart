@@ -2,6 +2,7 @@ import 'package:campus_app/citm.dart';
 import 'package:campus_app/env.dart';
 import 'package:campus_app/screens/mails_screen.dart';
 import 'package:campus_app/screens/main_screen.dart';
+import 'package:campus_app/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
@@ -19,7 +20,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       //home: ScrapingTestScreen(),
      // home: MailsScreen(),
-       home: MainScreen(),
+       home: WelcomeScreen(),
+      // home: MainScreen(),
     );
   }
 }
