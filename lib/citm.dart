@@ -270,8 +270,8 @@ class CITM {
     );
     if (response.statusCode == 200) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Missatge enviat correctament!')),
-      );
+          const SnackBar(content: Text('Missatge enviat correctament!')));
+          Navigator.pop(context);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("El missatge no s'ha pogut enviar!")),
