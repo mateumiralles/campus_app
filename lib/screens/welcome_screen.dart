@@ -1,4 +1,5 @@
-import 'package:campus_app/screens/main_screen.dart';
+import 'package:campus_app/citm.dart';
+import 'package:campus_app/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -58,7 +59,7 @@ class WelcomeScreen extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context)
                           .push(MaterialPageRoute(builder: (context) {
-                        return const MainScreen();
+                        return  const LoginScreen(numText: 1,text: 'Inicia sessió amb les credencials del CITM');
                       }));
                     },
                     style: OutlinedButton.styleFrom(

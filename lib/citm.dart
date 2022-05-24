@@ -271,7 +271,7 @@ class CITM {
     if (response.statusCode == 200) {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Missatge enviat correctament!')));
-          Navigator.pop(context);
+      Navigator.pop(context);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("El missatge no s'ha pogut enviar!")),
@@ -328,4 +328,29 @@ class NextClass {
 class CitmUser {
   String fullname, username;
   CitmUser(this.fullname, this.username);
+}
+
+class Credentials {
+  String username, password;
+  Credentials(this.username, this.password);
+
+  static Credentials getCredentials({required String user, required String pass}) {
+    Credentials credentials = Credentials(user, pass);
+
+    return credentials;
+  }
+}
+
+class Session {
+  List<Credentials> credentialsList = [];
+  
+  void setCredentials({required int index, required String user, required String pass}){
+    credentialsList.insert(index, Credentials.getCredentials(user: user, pass: pass));
+    
+    for (int i = 0; i < credentialsList.length; i++) {
+      debugPrint('$index: ( user: ${credentialsList[i].username}, pass: ${credentialsList[i].password})');
+    }
+  }
+
+
 }
