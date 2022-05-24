@@ -4,8 +4,9 @@ import 'package:campus_app/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 
 class LoginForm extends StatefulWidget {
-  const LoginForm({Key? key,  required this.index}) : super(key: key);
+  const LoginForm({Key? key,  required this.index, required this.session}) : super(key: key);
   final int index;
+  final Session session;
 
   @override
   LoginFormState createState() {
@@ -93,17 +94,22 @@ class LoginFormState extends State<LoginForm> {
                 child: OutlinedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        Session session = Session();
-                        session.setCredentials(
+                        
+                        widget.session.setCredentials(
                             index: widget.index,
                             user: userController.text,
                             pass: passwordController.text);
                         if (widget.index == 0) {
                           Navigator.of(context)
                           .push(MaterialPageRoute(builder: (context) {
-                        return  const LoginScreen(numText: 2,text: "Inicia sessió amb les credencials d'Atenea");
+                        return  LoginScreen(numText: 2,text: "Inicia sessió amb les credencials d'Atenea", session: widget.session,);
                       }));
-                        } else if (widget.index == 1) {}
+                        } else if (widget.index == 1) {
+                          Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (context) {
+                        return const MainScreen();
+                      }));
+                        }
                       }
                     },
                     style: OutlinedButton.styleFrom(

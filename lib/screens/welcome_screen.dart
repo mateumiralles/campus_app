@@ -57,9 +57,10 @@ class WelcomeScreen extends StatelessWidget {
               child: Center(
                 child: OutlinedButton(
                     onPressed: () {
+                      Session session = Session();
                       Navigator.of(context)
                           .push(MaterialPageRoute(builder: (context) {
-                        return  const LoginScreen(numText: 1,text: 'Inicia sessió amb les credencials del CITM');
+                        return  LoginScreen(numText: 1,text: 'Inicia sessió amb les credencials del CITM', session: session,);
                       }));
                     },
                     style: OutlinedButton.styleFrom(

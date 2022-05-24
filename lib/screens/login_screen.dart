@@ -1,10 +1,12 @@
+import 'package:campus_app/citm.dart';
 import 'package:campus_app/widgets/login_form.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key, required this.numText, required this.text }) : super(key: key);
+  const LoginScreen({Key? key, required this.numText, required this.text, required this.session}) : super(key: key);
    final int numText;
    final String text;
+   final Session session;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +44,7 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
             ),
-             Expanded(flex: 2, child: Center(child: LoginForm(index: numText-1))),
+             Expanded(flex: 2, child: Center(child: LoginForm(index: numText-1, session: session))),
                   ],
                 ),
           )),
