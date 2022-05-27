@@ -104,8 +104,8 @@ class LoginFormState extends State<LoginForm> {
                             user: userController.text,
                             pass: passwordController.text);
                         if (widget.index == 0) {
-                          credetinalsChecked =
-                              await widget.session.checkCitmCredentials(context);
+                          credetinalsChecked = await widget.session
+                              .checkCitmCredentials(context);
                           if (credetinalsChecked == true) {
                             Navigator.of(context)
                                 .push(MaterialPageRoute(builder: (context) {
@@ -117,12 +117,15 @@ class LoginFormState extends State<LoginForm> {
                               );
                             }));
                           }
-
                         } else if (widget.index == 1) {
-                          Navigator.of(context)
-                              .push(MaterialPageRoute(builder: (context) {
-                            return const MainScreen();
-                          }));
+                          credetinalsChecked = await widget.session
+                              .checkAteneaCredentials(context);
+                          if (credetinalsChecked == true) {
+                            Navigator.of(context)
+                                .push(MaterialPageRoute(builder: (context) {
+                              return const MainScreen();
+                            }));
+                          }
                         }
                       }
                     },

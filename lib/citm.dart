@@ -5,10 +5,70 @@ import 'package:http/http.dart' as http;
 final phpSessionRegexp = RegExp(r"PHPSESSID=([^;]*)");
 
 final loginUriCitm = Uri.parse("https://citm.fundacioupc.com/index.php?next=");
+final loginUriAtenea = Uri.parse("https://sso.upc.edu/CAS/login?service=https%3A%2F%2Fatenea.upc.edu%2Flogin%2Findex.php%3FauthCAS%3DCAS");
 
 const formDataHeaders = {
   "Content-Type": "application/x-www-form-urlencoded",
 };
+
+class Session {
+  List<Credentials> credentialsList = [];
+
+  void setCredentials(
+      {required int index, required String user, required String pass}) {
+    credentialsList.insert(
+        index, Credentials.getCredentials(user: user, pass: pass));
+
+    for (int i = 0; i < credentialsList.length; i++) {
+      debugPrint(
+          '$i: ( user: ${credentialsList[i].username}, pass: ${credentialsList[i].password})');
+    }
+  }
+
+  Future<bool> checkCitmCredentials(context) async {
+    final credentials = {
+      "username": credentialsList[0].username,
+      "password": credentialsList[0].password,
+    };
+
+    final response = await http.post(
+        loginUriCitm,
+        headers: formDataHeaders,
+        body: credentials);
+
+    if (response.statusCode != 302) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Credencials incorrectes o error al iniciar sessió")));
+      
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  Future<bool> checkAteneaCredentials(context) async {
+    final credentials = {
+      "adAS_mode": "authn",
+      "adAS_username": credentialsList[1].username,
+      "adAS_password": credentialsList[1].password,
+    };
+
+    final response = await http.post(
+        loginUriAtenea,
+        headers: formDataHeaders,
+        body: credentials);
+
+    if (response.statusCode != 302) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Credencials incorrectes o error al iniciar sessió")));
+      return false;
+
+    } else {
+      return true;
+    }
+  }
+}
+
 
 String extractSessionID(Map<String, String> headers) {
   if (!headers.containsKey('set-cookie')) {
@@ -342,43 +402,3 @@ class Credentials {
   }
 }
 
-class Session {
-  List<Credentials> credentialsList = [];
-
-  void setCredentials(
-      {required int index, required String user, required String pass}) {
-    credentialsList.insert(
-        index, Credentials.getCredentials(user: user, pass: pass));
-
-    for (int i = 0; i < credentialsList.length; i++) {
-      debugPrint(
-          '$index: ( user: ${credentialsList[i].username}, pass: ${credentialsList[i].password})');
-    }
-  }
-
-  Future<bool> checkCitmCredentials(context) async {
-    final credentials = {
-      "username": credentialsList[0].username,
-      "password": credentialsList[0].password,
-    };
-
-    final response = await http.post(
-        loginUriCitm,
-        headers: formDataHeaders,
-        body: credentials);
-
-    if (response.statusCode != 302) {
-
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("No s'ha pogut iniciar sessió")));
-      return false;
-
-    } else {
-
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("Credencials correctes!")));
-      return true;
-
-    }
-  }
-}
