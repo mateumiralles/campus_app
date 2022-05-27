@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 final phpSessionRegexp = RegExp(r"PHPSESSID=([^;]*)");
 
-final loginUri = Uri.parse("https://citm.fundacioupc.com/index.php?next=");
+final loginUriCitm = Uri.parse("https://citm.fundacioupc.com/index.php?next=");
 
 const formDataHeaders = {
   "Content-Type": "application/x-www-form-urlencoded",
@@ -50,7 +50,7 @@ class CITM {
       "password": _password,
     };
     final response =
-        await http.post(loginUri, headers: formDataHeaders, body: credentials);
+        await http.post(loginUriCitm, headers: formDataHeaders, body: credentials);
     if (response.statusCode != 302) {
       // they use a redirect to the initial page (inici.php)
       throw "Couldn't login (status ${response.statusCode}).";
@@ -334,7 +334,8 @@ class Credentials {
   String username, password;
   Credentials(this.username, this.password);
 
-  static Credentials getCredentials({required String user, required String pass}) {
+  static Credentials getCredentials(
+      {required String user, required String pass}) {
     Credentials credentials = Credentials(user, pass);
 
     return credentials;
@@ -343,14 +344,41 @@ class Credentials {
 
 class Session {
   List<Credentials> credentialsList = [];
-  
-  void setCredentials({required int index, required String user, required String pass}){
-    credentialsList.insert(index, Credentials.getCredentials(user: user, pass: pass));
-    
+
+  void setCredentials(
+      {required int index, required String user, required String pass}) {
+    credentialsList.insert(
+        index, Credentials.getCredentials(user: user, pass: pass));
+
     for (int i = 0; i < credentialsList.length; i++) {
-      debugPrint('$index: ( user: ${credentialsList[i].username}, pass: ${credentialsList[i].password})');
+      debugPrint(
+          '$index: ( user: ${credentialsList[i].username}, pass: ${credentialsList[i].password})');
     }
   }
 
+  Future<bool> checkCitmCredentials(context) async {
+    final credentials = {
+      "username": credentialsList[0].username,
+      "password": credentialsList[0].password,
+    };
 
+    final response = await http.post(
+        loginUriCitm,
+        headers: formDataHeaders,
+        body: credentials);
+
+    if (response.statusCode != 302) {
+
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("No s'ha pogut iniciar sessió")));
+      return false;
+
+    } else {
+
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Credencials correctes!")));
+      return true;
+
+    }
+  }
 }
