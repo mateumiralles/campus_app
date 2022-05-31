@@ -4,23 +4,38 @@ import 'package:campus_app/screens/mails_screen.dart';
 import 'package:campus_app/screens/main_screen.dart';
 import 'package:campus_app/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
-  final env = await readEnvFile();
-  CITM.init(env.username, env.password);
-  runApp(const MyApp());
+  //final env = await readEnvFile();
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  final userCitm = prefs.getString('userCitm');
+  final passCitm = prefs.getString('passCitm');
+  debugPrint(userCitm);
+  debugPrint(passCitm);
+  bool loadedCredentials = false;
+  if (userCitm != null && passCitm != null) {
+    CITM.init(userCitm, passCitm);
+    loadedCredentials = true;
+  }
+  runApp( MyApp(loadedCredentials));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
 
+class MyApp extends StatelessWidget {
+  const MyApp(  this.loadedCredentials, {Key? key}) : super(key: key);
+final bool loadedCredentials;
+
+  
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    
+    return  MaterialApp(
       debugShowCheckedModeBanner: false,
       //home: ScrapingTestScreen(),
-     // home: MailsScreen(),
-       home: WelcomeScreen(),
+      // home: MailsScreen(),
+      home: loadedCredentials ?  const MainScreen() : const WelcomeScreen() 
       // home: MainScreen(),
     );
   }

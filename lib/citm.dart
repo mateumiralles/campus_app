@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 final phpSessionRegexp = RegExp(r"PHPSESSID=([^;]*)");
 
@@ -66,6 +67,16 @@ class Session {
     } else {
       return true;
     }
+  }
+
+  Future<void> storeCredentials() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    await prefs.setString('userCitm', credentialsList[0].username);
+    await prefs.setString('passCitm', credentialsList[0].password);
+    await prefs.setString('userAtenea', credentialsList[1].username);
+    await prefs.setString('passAtenea', credentialsList[1].password);
+
   }
 }
 

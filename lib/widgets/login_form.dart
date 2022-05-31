@@ -121,6 +121,7 @@ class LoginFormState extends State<LoginForm> {
                           credetinalsChecked = await widget.session
                               .checkAteneaCredentials(context);
                           if (credetinalsChecked == true) {
+                            widget.session.storeCredentials();
                             Navigator.of(context)
                                 .push(MaterialPageRoute(builder: (context) {
                               return const MainScreen();
