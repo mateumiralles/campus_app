@@ -1,5 +1,4 @@
 import 'package:campus_app/citm.dart';
-import 'package:campus_app/env.dart';
 import 'package:campus_app/screens/mails_screen.dart';
 import 'package:campus_app/screens/main_screen.dart';
 import 'package:campus_app/screens/welcome_screen.dart';
@@ -7,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
-  //final env = await readEnvFile();
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   final userCitm = prefs.getString('userCitm');
