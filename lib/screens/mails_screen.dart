@@ -27,10 +27,10 @@ class _MailsScreenState extends State<MailsScreen> {
                 items: _folders
                     .map((String e) => DropdownMenuItem(
                           value: e,
+                          alignment: Alignment.centerRight,
                           //TODO: Treure Espai sobrant desplegable
                           child: Text(e,
                               style: const TextStyle(fontSize: 15), textAlign: TextAlign.right),
-                          alignment: Alignment.centerRight,
                         ))
                     .toList(),
                 onChanged: (_value) => {
@@ -49,7 +49,7 @@ class _MailsScreenState extends State<MailsScreen> {
           )
         ],
       ),
-      body: _inbox ? const ReceivedMailsList() : const SentMailsList() ,
+      body: _inbox ? const ReceivedMailsList() : const SentMailsList(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(builder: (context) {
@@ -65,5 +65,3 @@ class _MailsScreenState extends State<MailsScreen> {
     );
   }
 }
-
-

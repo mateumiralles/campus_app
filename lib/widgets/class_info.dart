@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:html/parser.dart';
 
 import '../citm.dart';
 
@@ -15,7 +14,7 @@ class _ClassInfoState extends State<ClassInfo> {
   bool loaded = false;
 
   getDataClasses() async {
-    closeClasses= await CITM.getCloseClasses();
+    closeClasses = await CITM.getCloseClasses();
     setState(() {
       loaded = true;
     });
@@ -33,12 +32,17 @@ class _ClassInfoState extends State<ClassInfo> {
       flex: 2,
       child: Container(
         decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(25))),
+            color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(25))),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
+              height: 70,
+              decoration: const BoxDecoration(
+                color: Colors.blue,
+                borderRadius:
+                    BorderRadius.only(topLeft: Radius.circular(25), topRight: Radius.circular(25)),
+              ),
               child: const Center(
                 child: Text(
                   "PRÒXIMES CLASSES",
@@ -48,13 +52,6 @@ class _ClassInfoState extends State<ClassInfo> {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-              ),
-              height: 70,
-              decoration: const BoxDecoration(
-                color: Colors.blue,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(25),
-                    topRight: Radius.circular(25)),
               ),
             ),
             Expanded(
@@ -67,56 +64,43 @@ class _ClassInfoState extends State<ClassInfo> {
                               itemBuilder: (context, index) {
                                 return ListTile(
                                   title: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                             '${closeClasses[index].time.day}/${closeClasses[index].time.month}/${closeClasses[index].time.year} - ${closeClasses[index].time.hour}:${closeClasses[index].time.minute == 0 ? '00' : closeClasses[index].time.minute}',
                                             style: const TextStyle(
-                                                fontSize: 13,
-                                                fontWeight: FontWeight.bold)),
+                                                fontSize: 13, fontWeight: FontWeight.bold)),
                                         const SizedBox(
                                           height: 3,
                                         ),
                                         Text(closeClasses[index].name,
-                                            style:
-                                                const TextStyle(fontSize: 15)),
+                                            style: const TextStyle(fontSize: 15)),
                                       ]),
-                                  subtitle: closeClasses[index]
-                                              .classroom
-                                              .length <=
-                                          15
+                                  subtitle: closeClasses[index].classroom.length <= 15
                                       ? Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(closeClasses[index].teacher,
-                                                style: const TextStyle(
-                                                    fontSize: 13)),
+                                                style: const TextStyle(fontSize: 13)),
                                             Text(closeClasses[index].classroom,
-                                                style: const TextStyle(
-                                                    fontSize: 13)),
+                                                style: const TextStyle(fontSize: 13)),
                                           ],
                                         )
                                       : Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Text(closeClasses[index].teacher,
-                                                style: const TextStyle(
-                                                    fontSize: 13)),
+                                                style: const TextStyle(fontSize: 13)),
                                             Text(closeClasses[index].classroom,
                                                 textAlign: TextAlign.end,
-                                                style: const TextStyle(
-                                                    fontSize: 13)),
+                                                style: const TextStyle(fontSize: 13)),
                                           ],
                                         ),
                                 );
                               },
                               itemCount: closeClasses.length,
                             )
-                          : const Center(
-                              child: Text('NO HI HAN PROPERES CLASSES!')),
+                          : const Center(child: Text('NO HI HAN PROPERES CLASSES!')),
                     )
                   : const Center(child: CircularProgressIndicator()),
             ),
@@ -126,4 +110,3 @@ class _ClassInfoState extends State<ClassInfo> {
     );
   }
 }
-
