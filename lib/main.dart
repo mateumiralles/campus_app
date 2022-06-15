@@ -13,28 +13,27 @@ void main() async {
   debugPrint(userCitm);
   debugPrint(passCitm);
   bool loadedCredentials = false;
-  if (userCitm != null && passCitm != null) {
+
+  if ((userCitm != null) && (passCitm != null)) {
     CITM.init(userCitm, passCitm);
     loadedCredentials = true;
   }
-  runApp( MyApp(loadedCredentials));
+
+  runApp(MyApp(loadedCredentials));
 }
 
-
 class MyApp extends StatelessWidget {
-  const MyApp(  this.loadedCredentials, {Key? key}) : super(key: key);
-final bool loadedCredentials;
+  const MyApp(this.loadedCredentials, {Key? key}) : super(key: key);
+  final bool loadedCredentials;
 
-  
   @override
   Widget build(BuildContext context) {
-    
-    return  MaterialApp(
-      debugShowCheckedModeBanner: false,
-      //home: ScrapingTestScreen(),
-      // home: MailsScreen(),
-      home: loadedCredentials ?  const MainScreen() : const WelcomeScreen() 
-      // home: MainScreen(),
-    );
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        //home: ScrapingTestScreen(),
+        // home: MailsScreen(),
+        home: loadedCredentials ? const MainScreen() : const WelcomeScreen()
+        // home: MainScreen(),
+        );
   }
 }
