@@ -1,4 +1,5 @@
 import 'package:campus_app/screens/mails_screen.dart';
+import 'package:campus_app/screens/tasks_screen.dart';
 import 'package:flutter/material.dart';
 
 class MainScreenBtn extends StatelessWidget {
@@ -18,12 +19,7 @@ class MainScreenBtn extends StatelessWidget {
               if (text == 'MISSATGES') {
                 return const MailsScreen();
               } else {
-                return Scaffold(
-                  appBar: AppBar(
-                    title: const Text('TASQUES'),
-                  ),
-                  body: const Center(child: Text('PANTALLA DE TASQUES!')),
-                );
+                return const TasksScreen();
               }
             },
           ),
@@ -50,3 +46,5 @@ class MainScreenBtn extends StatelessWidget {
     );
   }
 }
+
+

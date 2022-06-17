@@ -1,9 +1,8 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 
 class Moodle {
-  static String userToken = "49befd892ca0c963ab6ba55ce3b7513e";
+  static String userToken = "02254ae7f5688e1f4a51819c30619d14";
   static String host = "atenea.upc.edu";
 
   static Future apiGet<T>(String function, Map<String, dynamic> args) async {
@@ -19,7 +18,7 @@ class Moodle {
       },
     );
     final response = await http.get(uri);
-    //print(response.body);
+
     return jsonDecode(response.body);
   }
 }
@@ -35,7 +34,6 @@ class Course {
   String shortname, fullname;
   DateTime startDate;
   int enrolled;
-  int? groupid;
 
   Course.fromJson(Map<String, dynamic> json)
       : id = json['id'],
@@ -63,6 +61,7 @@ Future<Map<String, List<Course>>> getCourseList(int userid) async {
     "core_enrol_get_users_courses",
     {"userid": "$userid"},
   );
+
   Map<String, List<Course>> courses = {};
   for (final jsonCourse in jsonCourseList) {
     final course = Course.fromJson(jsonCourse);
@@ -70,11 +69,38 @@ Future<Map<String, List<Course>>> getCourseList(int userid) async {
     courses.putIfAbsent(key, () => []);
     courses[key]!.add(course);
   }
-  print(courses.values.first[0].fullname);
   return courses;
 }
 
-void main() {
-  //Moodle.apiGet("core_enrol_get_users_courses", {"userid": "135123"});
-  getCourseList(135123);
+class Assignment {
+  int id;
+  int courseid;
+  String name;
+  DateTime due;
+
+  Assignment.fromJson(Map<String, dynamic> json)
+      : id = json['cmid'],
+        courseid = json['course'],
+        due = DateTime.fromMillisecondsSinceEpoch(json['duedate'] * 1000),
+        name = json['name'];
+}
+
+Future<List<Assignment>> getAssignments(List<Course> activeCourses) async {
+  Map<String, dynamic> coursesIds = {};
+  for (int i = 0; i < activeCourses.length; i++) {
+    coursesIds["courseids[$i]"] = activeCourses[i].id.toString();
+  }
+  final Map<String, dynamic> json = await Moodle.apiGet(
+    "mod_assign_get_assignments",
+    coursesIds,
+  );
+  List<Assignment> assignments = [];
+  for (int i=0; i<activeCourses.length;i++) {
+    for (final assignJson in json['courses'][i]['assignments']) {
+    assignments.add(Assignment.fromJson(assignJson));
+  }
+  }
+
+  assignments.sort((a, b) => b.due.compareTo(a.due));
+  return assignments;
 }
