@@ -10,7 +10,7 @@ class SendMailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('NOU MISSATGE'),
+        title: const Text('Nou missatge'),
       ),
       body: const Center(
           child: 

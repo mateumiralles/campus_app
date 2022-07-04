@@ -6,7 +6,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 final phpSessionRegexp = RegExp(r"PHPSESSID=([^;]*)");
 
 final loginUriCitm = Uri.parse("https://citm.fundacioupc.com/index.php?next=");
-final loginUriAtenea = Uri.parse("https://sso.upc.edu/CAS/login?service=https%3A%2F%2Fatenea.upc.edu%2Flogin%2Findex.php%3FauthCAS%3DCAS");
+
+final loginUriAtenea = Uri.parse(
+    "https://sso.upc.edu/CAS/login?service=https%3A%2F%2Fatenea.upc.edu%2Flogin%2Findex.php%3FauthCAS%3DCAS");
 
 const formDataHeaders = {
   "Content-Type": "application/x-www-form-urlencoded",
@@ -14,6 +16,7 @@ const formDataHeaders = {
 
 class Session {
   List<Credentials> credentialsList = [];
+  String? ateneaUserId, ateneaUserToken;
 
   void setCredentials(
       {required int index, required String user, required String pass}) {
@@ -32,15 +35,13 @@ class Session {
       "password": credentialsList[0].password,
     };
 
-    final response = await http.post(
-        loginUriCitm,
-        headers: formDataHeaders,
-        body: credentials);
+    final response = await http.post(loginUriCitm,
+        headers: formDataHeaders, body: credentials);
 
     if (response.statusCode != 302) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Credencials incorrectes o error al iniciar sessió")));
-      
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("Credencials incorrectes o error al iniciar sessió")));
+
       return false;
     } else {
       return true;
@@ -54,16 +55,13 @@ class Session {
       "adAS_password": credentialsList[1].password,
     };
 
-    final response = await http.post(
-        loginUriAtenea,
-        headers: formDataHeaders,
-        body: credentials);
+    final response = await http.post(loginUriAtenea,
+        headers: formDataHeaders, body: credentials);
 
     if (response.statusCode != 302) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Credencials incorrectes o error al iniciar sessió")));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("Credencials incorrectes o error al iniciar sessió")));
       return false;
-
     } else {
       return true;
     }
@@ -76,10 +74,35 @@ class Session {
     await prefs.setString('passCitm', credentialsList[0].password);
     await prefs.setString('userAtenea', credentialsList[1].username);
     await prefs.setString('passAtenea', credentialsList[1].password);
+  }
 
+  Future<void> setAteneaUserId() async {
+    final credentials = {
+      "adAS_mode": "authn",
+      "adAS_username": credentialsList[1].username,
+      "adAS_password": credentialsList[1].password,
+    };
+
+    final response = await http.post(loginUriAtenea,
+        headers: formDataHeaders, body: credentials);
+
+    if (response.statusCode == 302) {
+      final ticket = response.headers["location"]!.split("=").last;
+      final loginUriAtenea2 = Uri.parse('https://atenea.upc.edu/login/index.php');
+       final uri = Uri(
+      scheme: "https",
+      host: "atenea.upc.edu",
+      path: "index.php",
+      queryParameters: {"authCAS": "CAS", "ticket": ticket},
+    );
+      
+
+      final response2 = await http.get(
+          uri);
+      print(response2.statusCode);
+    }
   }
 }
-
 
 String extractSessionID(Map<String, String> headers) {
   if (!headers.containsKey('set-cookie')) {
@@ -120,8 +143,8 @@ class CITM {
       "username": _username,
       "password": _password,
     };
-    final response =
-        await http.post(loginUriCitm, headers: formDataHeaders, body: credentials);
+    final response = await http.post(loginUriCitm,
+        headers: formDataHeaders, body: credentials);
     if (response.statusCode != 302) {
       // they use a redirect to the initial page (inici.php)
       throw "Couldn't login (status ${response.statusCode}).";
@@ -412,4 +435,3 @@ class Credentials {
     return credentials;
   }
 }
-

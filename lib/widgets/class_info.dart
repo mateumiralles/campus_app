@@ -59,7 +59,6 @@ class _ClassInfoState extends State<ClassInfo> {
                   ? Container(
                       child: closeClasses.isNotEmpty
                           ? ListView.builder(
-                              //TODO: comprovar que el shrinkWrap funciona be al haver-hi nomes 1 classe
                               shrinkWrap: true,
                               itemBuilder: (context, index) {
                                 return ListTile(
@@ -100,7 +99,8 @@ class _ClassInfoState extends State<ClassInfo> {
                               },
                               itemCount: closeClasses.length,
                             )
-                          : const Center(child: Text('NO HI HAN PROPERES CLASSES!')),
+                          : const Center(child: Text('NO HI HAN PROPERES CLASSES!',style: TextStyle(
+                                                fontSize: 16, fontWeight: FontWeight.bold))),
                     )
                   : const Center(child: CircularProgressIndicator()),
             ),

@@ -50,7 +50,7 @@ class _MailUsersScreenState extends State<MailUsersScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('DESTINATARIS'),
+        title: const Text('Destinataris'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(10),

@@ -122,6 +122,8 @@ class LoginFormState extends State<LoginForm> {
                               .checkAteneaCredentials(context);
                           if (credetinalsChecked == true) {
                             widget.session.storeCredentials();
+                            final a = await widget.session.setAteneaUserId();
+                            
                             CITM.init(widget.session.credentialsList[0].username, widget.session.credentialsList[0].password);
                             Navigator.of(context)
                                 .push(MaterialPageRoute(builder: (context) {

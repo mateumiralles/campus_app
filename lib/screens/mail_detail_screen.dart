@@ -30,21 +30,22 @@ class _MailDetailScreenState extends State<MailDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('MISSATGE DETAIL!'),
+        title:  Text('${widget.mail.subject}'),
       ),
       body: Center(
         child: _loaded
             ? Column(
                 children: [
-                  Text('ID: ${widget.mail.id}'),
-                  Text('Data: ${widget.mail.time}'),
-                  Text('Assumpte: ${widget.mail.subject}'),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 12),
+                    child: Text('Data: ${widget.mail.time.day}/${widget.mail.time.month}/${widget.mail.time.year}  ${widget.mail.time.hour}:${widget.mail.time.minute > 9 ? widget.mail.time.minute : '0${widget.mail.time.minute}'}'),
+                  ),
                   Expanded(
                     child: ListView.builder(
                       itemCount: mailTextList.length,
                       itemBuilder: (context, i) {
                         return ListTile(
-                          title: Text('Parrafo $i: ${mailTextList[i]}'),
+                          title: Text('${mailTextList[i]}'),
                         );
                       },
                     ),
