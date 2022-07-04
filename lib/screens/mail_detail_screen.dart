@@ -30,7 +30,7 @@ class _MailDetailScreenState extends State<MailDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  Text('${widget.mail.subject}'),
+        title:  Text(widget.mail.subject),
       ),
       body: Center(
         child: _loaded
@@ -45,7 +45,7 @@ class _MailDetailScreenState extends State<MailDetailScreen> {
                       itemCount: mailTextList.length,
                       itemBuilder: (context, i) {
                         return ListTile(
-                          title: Text('${mailTextList[i]}'),
+                          title: Text(mailTextList[i]),
                         );
                       },
                     ),
