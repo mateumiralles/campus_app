@@ -28,14 +28,13 @@ class _MailsScreenState extends State<MailsScreen> {
                     .map((String e) => DropdownMenuItem(
                           value: e,
                           alignment: Alignment.centerRight,
-                          //TODO: Treure Espai sobrant desplegable
                           child: Text(e,
                               style: const TextStyle(fontSize: 15), textAlign: TextAlign.right),
                         ))
                     .toList(),
-                onChanged: (_value) => {
+                onChanged: (value) => {
                   setState(() {
-                    _value == _folders[0] ? _inbox = true : _inbox = false;
+                    value == _folders[0] ? _inbox = true : _inbox = false;
                   })
                 },
                 hint: const Icon(Icons.folder),

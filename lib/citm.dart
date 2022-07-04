@@ -76,32 +76,6 @@ class Session {
     await prefs.setString('passAtenea', credentialsList[1].password);
   }
 
-  Future<void> setAteneaUserId() async {
-    final credentials = {
-      "adAS_mode": "authn",
-      "adAS_username": credentialsList[1].username,
-      "adAS_password": credentialsList[1].password,
-    };
-
-    final response = await http.post(loginUriAtenea,
-        headers: formDataHeaders, body: credentials);
-
-    if (response.statusCode == 302) {
-      final ticket = response.headers["location"]!.split("=").last;
-      final loginUriAtenea2 = Uri.parse('https://atenea.upc.edu/login/index.php');
-       final uri = Uri(
-      scheme: "https",
-      host: "atenea.upc.edu",
-      path: "index.php",
-      queryParameters: {"authCAS": "CAS", "ticket": ticket},
-    );
-      
-
-      final response2 = await http.get(
-          uri);
-      print(response2.statusCode);
-    }
-  }
 }
 
 String extractSessionID(Map<String, String> headers) {

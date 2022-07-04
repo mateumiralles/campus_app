@@ -1,4 +1,4 @@
-import 'package:campus_app/atenea/api.dart';
+import 'package:campus_app/atenea/atenea.dart';
 import 'package:flutter/material.dart';
 
 class TasksScreen extends StatefulWidget {
@@ -59,7 +59,7 @@ class _TasksScreenState extends State<TasksScreen> {
                       textAlign: TextAlign.center,
                     ),
                     subtitle: Text(
-                      'Venciment: ${assigmentsList[i].due.day}/${assigmentsList[i].due.month} a les ${assigmentsList[i].due.hour}:${assigmentsList[i].due.minute}',
+                      'Venciment: ${assigmentsList[i].due.day}/${assigmentsList[i].due.month} a les ${assigmentsList[i].due.hour}:${assigmentsList[i].due.minute > 9 ? assigmentsList[i].due.minute : '0${assigmentsList[i].due.minute}'}',
                       textAlign: TextAlign.center,
                     ),
                   ),
